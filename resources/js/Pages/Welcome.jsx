@@ -39,6 +39,7 @@ export default function Welcome(props) {
                                         >
                                             Laravel News
                                         </a>
+                                       
                                     </div>
                                 </div>
 
