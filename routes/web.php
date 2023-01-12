@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TwitController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -35,7 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    
+    Route::resource('twits',TwitController::class)->only(['index','store','upate'])->middleware(['auth', 'verified']);
+
+    // Route::get('/twits', [TwitController::class, 'index'])->name('twits.index');
+    // Route::post('/twits',[TwitController::class, 'store'])->name('twits.store');
+
 });
 
 require __DIR__.'/auth.php';
