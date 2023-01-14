@@ -48,7 +48,7 @@ class TwitController extends Controller
      */
     public function store(Request $request)
     {
-        //validate message
+        //validate message TODO: learn about laravel validation/Avoid duplicate code
         $validated = $request->validate([
             'message'=> 'required|string|max:255'
         ]);
@@ -90,7 +90,15 @@ class TwitController extends Controller
      */
     public function update(Request $request, Twit $twit)
     {
-        //
+        //by default authorize prevents everyone/ Authorize method::create a policy to allow users.
+        $this->authorize('update',$twit);
+
+        //validate 
+        $validated = $request->validate([
+            'message'=>'required|string|max:255',
+        ]);
+        $twit->update($validated);
+        return redirect(route('twits.index'));
     }
 
     /**
@@ -101,6 +109,9 @@ class TwitController extends Controller
      */
     public function destroy(Twit $twit)
     {
-        //
+        //to delete a twit, we need athorize
+        $this->authorize('delete',$twit); //authorize deleting
+        $twit->delete();
+        return redirect(route('twits.index'));
     }
 }

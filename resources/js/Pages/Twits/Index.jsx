@@ -24,7 +24,8 @@ function Index({auth,twits}) {
             <form onSubmit={submit}>
                 <textarea
                     value={data.message}
-                    placeholder="What's happening?"
+                    placeholder={"What's happening?"}
+ 
                     className="block w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                     onChange={e=>setData('message', e.target.value)}
                 />
