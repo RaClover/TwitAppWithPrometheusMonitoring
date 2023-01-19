@@ -6,6 +6,7 @@ use App\Models\Twit;
 use DateTime;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
 
 
 class TwitController extends Controller
@@ -35,9 +36,14 @@ class TwitController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function welcome()
     {
-        //
+        //guest rendered page, show twits
+        return Inertia::render('Welcome', [
+            'canLogin' => Route::has('login'),
+            'canRegister' => Route::has('register'),
+            'twits'=> Twit::with('user:id,name')->latest()->limit(3)->get(),
+        ]);
     }
 
     /**

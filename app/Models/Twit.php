@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Events\TwitCreated; //event
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,6 +15,10 @@ class Twit extends Model
         'message',
     ];
 
+    //dispatch event
+    protected $dispatchesEvents = [
+        'created'=> TwitCreated::class,
+    ];
 
     // defining a relationship between twit and user:: user hasMany Twits:: Check User Modal
     public function user(){
