@@ -1,27 +1,32 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import File from '@/Components/File';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Link, useForm, usePage } from '@inertiajs/inertia-react';
+import { Head, Link, useForm, usePage } from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
+import { method } from 'lodash';
+import { Method } from '@inertiajs/inertia';
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
     const user = usePage().props.auth.user;
 
-    const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
+    const { data, setData, post, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,
+        avatar:user.avatar,
     });
 
     const submit = (e) => {
         e.preventDefault();
 
-        patch(route('profile.update'));
+        post(route('profile.update',{_method:'patch',forceFormData:true}));
     };
 
     return (
         <section className={className}>
             <header>
+                <img className="w-32 h-32 rounded-full" src={`/uploads/avatar/${user.avatar}`} alt={user.name}/>
                 <h2 className="text-lg font-medium text-gray-900">Profile Information</h2>
 
                 <p className="mt-1 text-sm text-gray-600">
@@ -29,7 +34,22 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 </p>
             </header>
 
-            <form onSubmit={submit} className="mt-6 space-y-6">
+            <form onSubmit={submit} className="mt-6 space-y-6" encType="multipart/form-data">
+              <div>
+                    <InputLabel for="file" value="Change Profile Image" />
+
+                    <File id="avatar"
+                    name="avatar"
+                    // value=""
+                    //this is how you get upload files
+                    handleChange={(e)=>setData('avatar',e.target.files[0])}
+                    className="mt-2"
+                    />
+
+                    {/* <TextInput type="file" id='avatar' value="" handleChange={(e)=>setData('avatar',e.target.value)}/> */}
+
+                    <InputError className="mt-2" message={errors.avatar} />
+                </div>
                 <div>
                     <InputLabel for="name" value="Name" />
 

@@ -26,7 +26,7 @@ class TwitController extends Controller
 
        return Inertia::render('Twits/Index',[
             //we fetch the twits ordering by the latest
-            'twits'=> Twit::with('user:id,name')->latest()->get(),
+            'twits'=> Twit::with('user:id,name,avatar')->latest()->get(),
 
        ]);
     }
@@ -42,7 +42,7 @@ class TwitController extends Controller
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'twits'=> Twit::with('user:id,name')->latest()->limit(3)->get(),
+            'twits'=> Twit::with('user:id,name,avatar')->latest()->limit(3)->get(),
         ]);
     }
 

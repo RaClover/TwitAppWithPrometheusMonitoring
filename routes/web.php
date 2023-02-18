@@ -17,7 +17,7 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [TwitController::class,'welcome']);
+Route::get('/', [TwitController::class,'welcome']); //public for guest page
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -31,8 +31,6 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('twits',TwitController::class)->only(['index','store','update','destroy'])->middleware(['auth', 'verified']);
 
-    // Route::get('/twits', [TwitController::class, 'index'])->name('twits.index');
-    // Route::post('/twits',[TwitController::class, 'store'])->name('twits.store');
 
 });
 

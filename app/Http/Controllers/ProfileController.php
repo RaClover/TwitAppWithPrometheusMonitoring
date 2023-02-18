@@ -29,7 +29,26 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+
         $request->user()->fill($request->validated());
+
+        //validate avatar, shouldn't exceed 2048
+        $request->validated([
+
+            'avatar' => 'nullable|image|max:2048',
+
+        ]);
+
+
+        //if avatar contains image, set name and move to public folder upload.
+        $avatar = $request->hasFile(('avatar'));
+        if ($avatar) {
+            $avatarName = time() . '.' . $request->avatar->getClientOriginalExtension();
+            $request->avatar->move(public_path('/uploads/avatar'), $avatarName);
+            $request->user()->update(['avatar' => $avatarName]);
+        }
+
+
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

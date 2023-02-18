@@ -29,7 +29,7 @@ function Twit({twit}) {
    
   return (
      <div className="p-6 flex space-x-2">
-            <FaUserCircle className="h-6 w-6 text-purple-500" />
+            <img className="w-9 h-9 rounded-full" src={`/uploads/avatar/${twit.user.avatar}`} alt={twit.user.name}/>
             <div className="flex-1">
                 <div className="flex justify-between items-center">
                     <div>
