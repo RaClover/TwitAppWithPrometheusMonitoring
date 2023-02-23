@@ -13,8 +13,14 @@ class Twit extends Model
     //TODO: learn about laravel mass assignment
     protected $fillable = [
         'message',
+        'images' 
+    
     ];
 
+    protected $casts = [
+        'images' => 'array'
+    ];
+    
     //dispatch event
     protected $dispatchesEvents = [
         'created'=> TwitCreated::class,

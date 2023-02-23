@@ -5,8 +5,7 @@ export default forwardRef(function FileUpload(
     ref
 ) {
     const input = ref ? ref : useRef();
-    // const Filelabel = !files ?  `Choose file${multiple ? '(s)' : ''}` : fileNames;
-
+    
     return (
         <div className="flex flex-col items-start">
             <input
