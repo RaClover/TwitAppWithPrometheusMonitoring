@@ -104,6 +104,7 @@ class TwitController extends Controller
     public function removeImage(Twit $twit)
     {
         //TODO:unlink image
+        //TODO: add comment/replies/likes/disklikes
 
 
     }
@@ -135,7 +136,7 @@ class TwitController extends Controller
         //         }
         //     }
         // }
-        
+
         //validate 
         $validated = $request->validate([
             'message' => 'required|string|max:255',

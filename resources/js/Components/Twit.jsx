@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import dayjs from "dayjs";
 import { FaUserCircle, FaEdit } from "react-icons/fa";
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -7,6 +7,7 @@ import Dropdown from "./Dropdown";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputError from "@/Components/InputError";
 import { useForm, usePage } from "@inertiajs/inertia-react";
+import ImageViewer from 'react-simple-image-viewer';
 
 dayjs.extend(relativeTime);
 function Twit({ twit }) {
@@ -14,6 +15,22 @@ function Twit({ twit }) {
     const { auth } = usePage().props;
     //state
     const [edit, setEdit] = useState(false);
+
+    //image viewer state
+    const [currentImage, setCurrentImage] = useState([]);
+    const [isViewerOpen, setIsViewerOpen] = useState(false)
+
+    //open image viewer
+    const openImageViewer = useCallback((index)=>{
+        setCurrentImage(index)
+        setIsViewerOpen(true);
+    },[]);
+
+    //close image viewer
+    const closeImageViewer = () => {
+        setCurrentImage(0);
+        setIsViewerOpen(false);
+    };
 
     //form props, methods (update)
     const { data, setData, patch, clearErrors, reset, errors } = useForm({
@@ -97,7 +114,7 @@ function Twit({ twit }) {
                         )
                     }
                 </div>
-                {/* <p className="mt-4 text-lg text-gray-900">{twit.message}</p> */}
+    
                 {edit ? (
                     <form onSubmit={submit}>
                         <textarea
@@ -105,44 +122,39 @@ function Twit({ twit }) {
                             onChange={(e) => setData("message", e.target.value)}
                             className="mt-4 w-full text-gray-900 border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm"
                         />
-                        {/* {console.log(data.images)} */}
+    
+                        <div className="grid grid-cols-3 mb-2 ">
                         {data.images &&
                             data.images.map((img, index) => {
                                 return (
-                                    <div className="w-full rounded">
+                                    <div className="mr-4">
                                         <img
                                             key={index}
                                             src={`/uploads/images/${img}`}
-                                            className="mt-4"
-                                            width={100}
+                                            className="mt-0"
+                                            width={200}
                                         />
-                                        <button
-                                            onClick={() => removeImage(img)}
-                                        >
-                                            x
-                                        </button>
+                                        <PrimaryButton type="button" className="mt-1 bg-blue-500 hover:bg-blue-700"
+                                         onClick={() => removeImage(img)}>X</PrimaryButton>
                                     </div>
                                 );
                             })}
+                            </div>
 
                         <InputError message={errors.message} className="mt-2" />
 
                         <div>
-                            <PrimaryButton className="mt-3">Save</PrimaryButton>
-                            <button
-                                className="mt-3"
-                                onClick={() => {
+                            <PrimaryButton className="mt-3 mr-1">Save</PrimaryButton>
+                          
+                            <PrimaryButton className=" bg-red-500 hover:bg-red-700"  onClick={() => {
                                     setEdit(false);
                                     reset();
                                     clearErrors();
-                                }}
-                            >
-                                Cancel
-                            </button>
+                                }}>Cancel</PrimaryButton>
+
                         </div>
                     </form>
                 ) : (
-                    //TODO: add React Image viewer.
                     //TODO: Toast for notifications
                     <div className="">
                         <p className="mt-4text-lg text-gray-900">
@@ -157,10 +169,20 @@ function Twit({ twit }) {
                                             src={`/uploads/images/${image}`}
                                             className="mt-4"
                                             width={200}
+                                            onClick={()=>openImageViewer(index)}
                                         />
                                     </div>
                                 ))}
                         </div>
+                        {isViewerOpen && (<ImageViewer
+                            src={twit.images.map((image) => `${`/uploads/images/${image}`}`)}
+                            currentIndex={currentImage}
+                            disableScroll={false}
+                            closeOnClickOutside={true}
+                            onClose={closeImageViewer}
+                            backgroundStyle={{backgroundColor: 'rgba(0, 0, 0, 0.9)'}}
+                        
+                        />)}
                     </div>
                 )}
             </div>

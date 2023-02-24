@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "dayjs": "^1.11.7",
-        "react-icons": "^4.7.1"
+        "react-icons": "^4.7.1",
+        "react-simple-image-viewer": "^1.2.2"
     }
 }

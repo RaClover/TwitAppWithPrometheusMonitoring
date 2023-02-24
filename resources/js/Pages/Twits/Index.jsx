@@ -7,8 +7,6 @@ import Twit from "@/Components/Twit";
 import File from "@/Components/File";
 
 function Index({ auth, twits }) {
-    //TODO: add image upload to message
-
     //define props for form
     const { data, setData, post, processing, reset, errors } = useForm({
         message: "",
@@ -39,9 +37,12 @@ function Index({ auth, twits }) {
                         name="images"
                         handleChange={(e) =>
                             setData("images", e.target.files)
+                            //clear input
+                        
                         }
                         className="mt-2"
                         multiple
+                        type="file"
                     />
                     <InputError message={errors.images} className="mt-2" />
 
