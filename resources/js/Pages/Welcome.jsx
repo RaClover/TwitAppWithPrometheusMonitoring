@@ -64,7 +64,7 @@ export default function Welcome(props) {
                                             )}
                                         </div>
                                     </div>
-
+                                    {/*TODO:: add image viewer guest */}
                                     <div className="ml-12">
                                         <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                             {twit.message}
@@ -80,6 +80,11 @@ export default function Welcome(props) {
                                                                 src={`/uploads/images/${image}`}
                                                                 className="mt-4"
                                                                 width={200}
+                                                                onClick={() =>
+                                                                    openImageViewer(
+                                                                        index
+                                                                    )
+                                                                }
                                                             />
                                                         </div>
                                                     )
