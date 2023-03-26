@@ -4,8 +4,11 @@ import { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/inertia-react";
 import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/inertia-react";
+import relativeTime from "dayjs/plugin/relativeTime";
+import dayjs from "dayjs";
 
 export default function Modal({ showModal, setShowModal, twit }) {
+    dayjs.extend(relativeTime);
     const { data, setData, post, clearErrors, reset, errors } = useForm({
         comment_body: "",
         twit_id: twit.id,
@@ -29,7 +32,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
             {showModal ? (
                 <>
                     <div
-                        className="fixed z-10 inset-0 overflow-y-auto"
+                        className="fixed z-10 inset-0 overflow-y-auto "
                         aria-labelledby="modal-title"
                         role="dialog"
                         aria-modal="true"
@@ -45,9 +48,12 @@ export default function Modal({ showModal, setShowModal, twit }) {
                             >
                                 &#8203;
                             </span>
-                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full w-2/3">
+                            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full w-full">
                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                                     {twit.comments.map((comment, index) => (
+                                        // TODO: only show 5 comments at  a time
+                                        //TODO: delete comment
+                                        //replies to comments
                                         <div
                                             key={comment.id}
                                             className=" sm:items-start mb-2"
@@ -68,7 +74,11 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     {comment.comment_body}
                                                 </p>
                                                 {/* {comment.like_disklike !null comment.like_disklike ? 'like' : 'dislike'}  */}
+                                           
                                             </div>
+                                            <p className="text-xs text-gray-500 text-right">
+                                            {dayjs(comment.created_at).fromNow()}
+                                            </p>
                                         </div>
                                     ))}
 
