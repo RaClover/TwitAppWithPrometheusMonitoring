@@ -6,26 +6,35 @@ import InputError from "@/Components/InputError";
 import { usePage } from "@inertiajs/inertia-react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
+import Dropdown from "@/Components/Dropdown";
 
 export default function Modal({ showModal, setShowModal, twit }) {
     dayjs.extend(relativeTime);
     const { data, setData, post, clearErrors, reset, errors } = useForm({
         comment_body: "",
         twit_id: twit.id,
+        parent_id: null,
+
     });
 
-    const { auth } = usePage().props;
+    const { auth,comments } = usePage().props;
+
+    // console.log(comments[0].replies)
 
     const submitComment = (e) => {
         e.preventDefault();
         post(route("comments.store"), {
             onSuccess: () => {
                 setData("comment_body", " ");
+
                 // reset();
                 setShowModal(true);
             },
         });
     };
+
+
+
 
     return (
         <>
@@ -58,6 +67,52 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                             key={comment.id}
                                             className=" sm:items-start mb-2"
                                         >
+                                            {/* delete comment */}
+                                            {comment.user_id == auth.user.id ? (
+                                            <div className="flex justify-end">
+                                                <Dropdown>
+                                                <Dropdown.Trigger>
+                                                    <button>
+                                                       
+                                                        <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            className="h-4 w-4 text-gray-400"
+                                                            viewBox="0 0 20 20"
+                                                            fill="currentColor"
+                                                        >
+                                                            <path d="M6 10a2 2 0 11-4 0 2 2 0 014 0zM12 10a2 2 0 11-4 0 2 2 0 014 0zM16 12a2 2 0 100-4 2 2 0 000 4z" />
+                                                        </svg>
+                                                    </button>
+                                                </Dropdown.Trigger>
+
+                                                <Dropdown.Content>
+                                                    <button
+                                                        className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
+                                                        // onClick={() => setEdit(true)}
+                                                    >
+                                                        Reply
+                                                    </button>
+
+                                                    <Dropdown.Link
+                                                        as="button"
+                                                        href={route(
+                                                            "comments.destroy",
+                                                            comment.id
+                                                        )}
+                                                        method="delete"
+                                                    >
+                                                        Delete
+                                                    </Dropdown.Link>
+                                                    
+                                                </Dropdown.Content>
+                                            </Dropdown>
+                                        
+                                            </div>
+                                            ) : (
+                                                null
+                                            )}
+
+                                        
                                             <div class="flex items-center px-3 py-2 rounded-lg bg-gray-50">
                                                 <img
                                                     className="w-9 rounded-full bg-red-500"
@@ -73,14 +128,34 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                 >
                                                     {comment.comment_body}
                                                 </p>
-                                                {/* {comment.like_disklike !null comment.like_disklike ? 'like' : 'dislike'}  */}
-                                           
+                                                    {/* {comment.parent_id == null ? 'reply to comment' : 'comment'} */}
+                                                    {/* display comment replies */}
+                                                    {/* {comments.replies.map((reply, index) => ( 
+                                                        <p
+                                                            key={reply.id}
+                                                            className=" sm:items-start mb-2"
+                                                        >
+                                                            {reply}
+
+                                                        </p>
+                                                    ))}
+                                                <p className="text-xs text-gray-500 text-right">
+                                                    {dayjs(
+                                                        comment.created_at
+                                                    ).fromNow()}
+                                                </p>
+                                                             */}
+                                
                                             </div>
+                                            
+                                                    {/* <p className=" text-right ">comment replies</p> */}
                                             <p className="text-xs text-gray-500 text-right">
                                             {dayjs(comment.created_at).fromNow()}
                                             </p>
                                         </div>
-                                    ))}
+                                      
+                                    ))} 
+
 
                                     <div className=" sm:items-start">
                                         <form onSubmit={submitComment}>
@@ -110,6 +185,17 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     onChange={(e) =>
                                                         setData(
                                                             "twit_id",
+                                                            e.target.value
+                                                        )
+                                                    }
+                                                />
+                                                <input 
+                                                    type="hidden"
+                                                    name="parent_id"
+                                                    value={twit.id}
+                                                    onChange={(e) =>
+                                                        setData(
+                                                            "parent_id",
                                                             e.target.value
                                                         )
                                                     }

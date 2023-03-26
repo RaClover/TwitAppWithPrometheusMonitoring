@@ -7,6 +7,7 @@ use App\Models\Comment;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Twit;
 
+
 class CommentController extends Controller
 {
     /**
@@ -55,11 +56,11 @@ class CommentController extends Controller
             // 'twit_id'=>Twit::all('id') ,
             //get id of the current twit being commented on
             'twit_id'=> $request->get('twit_id'),
+            'parent_id' => $request->get('parent_id'),
 
 
 
             // 'like_dislike' => $request->get('like_dislike'),
-            // 'parent_id' => $request->get('parent_id'),
 
         ]);
 
@@ -110,8 +111,12 @@ class CommentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comment $comment)
     {
-        //
+        
+        $comment = Comment::find($comment->id);
+    
+        $comment->delete();
+        return redirect(route('twits.index'))->with('comment deleted!');
     }
 }

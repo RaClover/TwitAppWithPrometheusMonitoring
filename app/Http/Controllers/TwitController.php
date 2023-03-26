@@ -33,6 +33,8 @@ class TwitController extends Controller
 
             //fetch twits, users and related comments
             'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar'])->latest()->get(),
+            // get comment with replies
+            'comments' => Comment::with('replies')->get(),
 
 
 
