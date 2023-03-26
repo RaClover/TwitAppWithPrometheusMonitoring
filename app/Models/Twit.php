@@ -30,4 +30,14 @@ class Twit extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+    //relation between comments and twits: Each twit can have many comments
+    public function comments(){
+        return $this->hasMany(Comment::class,'twit_id','id');
+    }
+
+    //fetch twits with comments 
+
+
+
+
 }

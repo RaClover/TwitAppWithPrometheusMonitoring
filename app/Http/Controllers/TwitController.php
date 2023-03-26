@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Twit;
+use App\Models\Comment;
 use DateTime;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
@@ -24,8 +25,16 @@ class TwitController extends Controller
         //return Inertia::render('Twits/Twits',['answer'=> $nub, 'mydate'=> $mydate]);
 
         return Inertia::render('Twits/Index', [
-            //we fetch the twits ordering by the latest
-            'twits' => Twit::with('user:id,name,avatar')->latest()->get(),
+            //we fetch the twits ordering by the latest 
+            // 'twits' => Twit::with(['user:id,name,avatar','comments:id,comment_body'])->latest()->get(),
+            // and comments 
+            // 'comments' => Twit::with('comments:id,comment_body,like_dislike')->get(),
+            // dd(Twit::with('comments')->latest()->get(),)
+
+            //fetch twits, users and related comments
+            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar'])->latest()->get(),
+
+
 
         ]);
     }
@@ -140,7 +149,7 @@ class TwitController extends Controller
         //validate 
         $validated = $request->validate([
             'message' => 'required|string|max:255',
-            'images' => 'array | max:3'
+            'images' => 'array | max:3 | nullable'
         ]);
         
         $twit->update($validated);
@@ -176,6 +185,8 @@ class TwitController extends Controller
         }
         //then remove record from db
         $twit->delete();
+        //remove comment 
+        $twit->comments()->delete();
         //redirect
         return redirect(route('twits.index'));
     }

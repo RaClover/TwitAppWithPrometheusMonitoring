@@ -50,7 +50,7 @@ function Index({ auth, twits }) {
                         Post
                     </PrimaryButton>
                 </form>
-                <div className="mt-6 bg-white shadow-sm rounded-lg divide-y">
+                <div className="mt-6">
                     {twits.map((twit) => (
                         <Twit key={twit.id} twit={twit} />
                         

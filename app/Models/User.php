@@ -48,4 +48,11 @@ class User extends Authenticatable
     public function twits() {
         return $this->hasMany(Twit::class);
     }
+    
+    // defining a relationship betwen user and comment..
+    public function comments() {
+        return $this->hasMany(Comment::class);
+    }
+
+   
 }
