@@ -250,7 +250,7 @@ function Twit({ twit }) {
             }
                 </button>
                
-                <span className="text-black-500 absolute inline-flex items-center justify-center w-6 h-6 px-9 text-xs">Comments</span>
+                <span className="text-black-500 absolute inline-flex items-center justify-center w-6 h-6 px-9 text-xs">{twit.comments.length + "Comments"}</span>
                 {/* add comments modal component */}
             </div>
                 <Comments showModal={showModal} setShowModal={setShowModal} twit={twit}/>
