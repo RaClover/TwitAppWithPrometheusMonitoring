@@ -25,7 +25,9 @@ export default function Modal({ showModal, setShowModal, twit }) {
         e.preventDefault();
         post(route("comments.store"), {
             onSuccess: () => {
-                setData("comment_body", " ");
+                console.log(comment_body)
+                setData('comment_body', "");
+                console.log(comment_body)
 
                 // reset();
                 setShowModal(true);
