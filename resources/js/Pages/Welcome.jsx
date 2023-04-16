@@ -7,12 +7,6 @@ import Register from "@/Pages/Auth/Register";
 dayjs.extend(relativeTime);
 export default function Welcome(props) {
     const [register, setRegister] = useState(false);
-    const handleRegister = () => {
-        setRegister(true);
-        if (register === true) {
-            setRegister(false);
-        }
-    };
     return (
         <>
             <Head title="Welcome" />
@@ -22,7 +16,7 @@ export default function Welcome(props) {
                         <div className="w-full sm:w-1/2">
                             <div className="max-w-3xl">
                                 <h1 className="font-alt-40 text-solar-700 mb-4 text-xl uppercase tracking-wider lg:text-2xl">
-                                    .......
+                                    .....
                                 </h1>
                                 <h2 className="lg:text-66xl md:tracking-tightish leading-extra-tight mb-6 font-serif text-5xl md:mb-8 md:text-6xl">
                                     TwitBook
@@ -81,10 +75,10 @@ export default function Welcome(props) {
                                 <div className="mt-8 md:mt-12">
                                     <a
                                         href="#"
-                                        className="button-super text-white hover:bg-iris-600 font-sans-medium text-md relative flex items-center justify-center overflow-hidden rounded-lg bg-blue-400 px-4 py-2 shadow transition ease-in-out hover:text-white focus:ring sm:inline-flex sm:justify-between sm:px-6 sm:py-3 sm:text-lg md:px-7 md:py-3 md:text-xl"
+                                        className="button-super text-white font-sans-medium text-md relative flex items-center justify-center overflow-hidden rounded-lg bg-blue-400 hover:bg-blue-600 px-4 py-2 shadow transition ease-in-out hover:text-white focus:ring sm:inline-flex sm:justify-between sm:px-6 sm:py-3 sm:text-lg md:px-7 md:py-3 md:text-xl"
                                         data-cursor="scale"
                                         onClick={() =>
-                                            setRegister(handleRegister)
+                                            setRegister(!register)
                                         }
                                     >
                                         <span className="relative z-20">
