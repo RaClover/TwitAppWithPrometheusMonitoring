@@ -99,11 +99,13 @@ function Index({ auth, twits }) {
                                 <Twit key={twit.id} twit={twit} />
                             ))}
                             {itemsRemaining > 0 ? (
-                        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold mb-4 py-2 px-4 rounded" onClick={()=>PaginatedResults()}>
-                        load more
-                        </button>
+                            <div className="text-center">
+                                <button className="bg-blue-500 hover:bg-blue-700 text-white text-xs font-bold mb-4 py-2 px-4 rounded animate-pulse" onClick={()=>PaginatedResults()}>
+                                    Load more...
+                                </button>
+                            </div>
 
-                            ):(<p>You've reached the end!!</p>)}
+                            ):(<p className="text-center">You've reached the end!!</p>)}
                         </div>
                     </div>
                 </div>

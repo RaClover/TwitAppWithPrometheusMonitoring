@@ -16,6 +16,26 @@ export default function Modal({ showModal, setShowModal, twit }) {
         parent_id: null,
 
     });
+     //slice 
+     const [currentPage, setCurrentPage] = useState(0)
+     const [commentsPerPage, setCommentsPerPage] = useState(5)
+  
+
+
+    const pageNumber = [];
+    for(let i = 1; i <= Math.ceil(twit.comments.length / commentsPerPage) ; i++){
+        pageNumber.push(i)
+    }
+   
+
+    const paginatedprevComments = () => {
+        setCurrentPage(0);
+        setCommentsPerPage(5);
+    }
+    const paginatedComments = () => {
+        setCurrentPage(currentPage + 5);
+        setCommentsPerPage(commentsPerPage + 5);
+    }
 
     const { auth,comments } = usePage().props;
 
@@ -25,12 +45,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
         e.preventDefault();
         post(route("comments.store"), {
             onSuccess: () => {
-                console.log(comment_body)
-                setData('comment_body', "");
-                console.log(comment_body)
-
-                // reset();
-                setShowModal(true);
+                reset();
             },
         });
     };
@@ -61,9 +76,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                             </span>
                             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full w-full">
                                 <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                    {twit.comments.map((comment, index) => (
-                                        // TODO: only show 5 comments at  a time
-                                        //TODO: delete comment
+                                    {twit.comments.slice(currentPage,commentsPerPage).map((comment) => (
                                         //replies to comments
                                         <div
                                             key={comment.id}
@@ -147,11 +160,11 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     ).fromNow()}
                                                 </p>
                                                              */}
-                                
+                                      
                                             </div>
                                             
                                                     {/* <p className=" text-right ">comment replies</p> */}
-                                            <p className="text-xs text-gray-500 text-right">
+                                                    <p className="text-xs text-gray-500 text-right">
                                             {dayjs(comment.created_at).fromNow()}
                                             </p>
                                         </div>
@@ -173,6 +186,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     rows="1"
                                                     class="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-gray-40 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                     placeholder="Your comment..."
+                                                    value = {data.comment_body}
                                                     onChange={(e) =>
                                                         setData(
                                                             "comment_body",
@@ -224,6 +238,16 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                             />
                                         </form>
                                     </div>
+                                    {twit.comments.length > 5 && (
+                                        <>
+                                        {currentPage > pageNumber ? (
+                                            <span className={`text-xs p-2 m-5 cursor-pointer`} onClick={()=>paginatedprevComments()}>View previous comments</span>
+                                        ):(  
+                                        <span className="text-xs p-2 m-5 cursor-pointer" onClick={()=>paginatedComments()}>View more comments</span>
+                                        )}
+                                        </>
+                                    )}
+
                                 </div>
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button
