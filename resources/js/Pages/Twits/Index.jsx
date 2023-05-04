@@ -6,7 +6,7 @@ import { useForm, Head } from "@inertiajs/inertia-react";
 import Twit from "@/Components/Twit";
 import File from "@/Components/File";
 
-function Index({ auth, twits }) {
+function Index({ auth, twits,comments }) {
     //define props for form
     const { data, setData, post, processing, reset, errors } = useForm({
         message: "",
@@ -16,12 +16,12 @@ function Index({ auth, twits }) {
     const [loadMore, setLoadmore] = useState(4)
     const TwitsPerPage = 4;
     const itemsRemaining = twits.length - loadMore
-
+    console.log(twits)
     const PaginatedResults = () => {
         setLoadmore(loadMore + TwitsPerPage)
 
     }
-
+    console.log(comments)
     //post msg to controller & reset form
     const submit = (e) => {
         e.preventDefault();

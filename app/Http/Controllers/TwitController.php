@@ -26,15 +26,16 @@ class TwitController extends Controller
 
         return Inertia::render('Twits/Index', [
             //we fetch the twits ordering by the latest 
-            // 'twits' => Twit::with(['user:id,name,avatar','comments:id,comment_body'])->latest()->get(),
-            // and comments 
-            // 'comments' => Twit::with('comments:id,comment_body,like_dislike')->get(),
-            // dd(Twit::with('comments')->latest()->get(),)
-
-            //fetch twits, users and related comments
-            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar'])->latest()->get(),
+            
+            //fetch twits, users and related comments, get by latest
+            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar','comments.replies','comments.replies.user'])->latest()->get(),
             // get comment with replies
-            'comments' => Comment::with('replies')->get(),
+            // 'comments' => Comment::with('replies')->get(),
+            // 'comments'=>Comment::whereNull('parent_id')->get()
+            //RETURNS REPLIES
+            'replies'=>Comment::whereNotNull('parent_id')->get(),
+            //RETURNS COMMENTS
+            'comments'=>Comment::whereNull('parent_id')->with(['user:id,name,avatar'])->latest()->get()
 
 
 

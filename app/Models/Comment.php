@@ -40,8 +40,8 @@ class Comment extends Model
     }
 
     //relation between comments and comments: Each comment can have many comments
-    public function parent(){
-        return $this->belongsTo(Comment::class, 'parent_id');
-    }
+    // public function parent(){
+    //     return $this->belongsTo(Comment::class, 'parent_id');
+    // }
 
 }

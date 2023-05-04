@@ -57,9 +57,6 @@ class CommentController extends Controller
             //get id of the current twit being commented on
             'twit_id'=> $request->get('twit_id'),
             'parent_id' => $request->get('parent_id'),
-
-
-
             // 'like_dislike' => $request->get('like_dislike'),
 
         ]);
