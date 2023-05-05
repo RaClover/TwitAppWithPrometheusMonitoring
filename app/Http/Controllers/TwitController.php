@@ -33,7 +33,7 @@ class TwitController extends Controller
             // 'comments' => Comment::with('replies')->get(),
             // 'comments'=>Comment::whereNull('parent_id')->get()
             //RETURNS REPLIES
-            'replies'=>Comment::whereNotNull('parent_id')->get(),
+            'replies'=>Comment::whereNotNull('parent_id')->with(['user:id,name,avatar'])->latest()->get(),
             //RETURNS COMMENTS
             'comments'=>Comment::whereNull('parent_id')->with(['user:id,name,avatar'])->latest()->get()
 

@@ -7,12 +7,14 @@ import { usePage } from "@inertiajs/inertia-react";
 import relativeTime from "dayjs/plugin/relativeTime";
 import dayjs from "dayjs";
 import Dropdown from "@/Components/Dropdown";
+import { comment } from "postcss";
 
 export default function Modal({ showModal, setShowModal, twit }) {
     dayjs.extend(relativeTime);
     //replies 
     const [reply, setReply] = useState(false)
     const [replyId, setReplyId] = useState()
+    const [showReplies,setShowReplies] = useState(false)
     const { data, setData, post, clearErrors, reset, errors } = useForm({
         comment_body: "",
         twit_id: twit.id,
@@ -90,13 +92,13 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                     {twit.comments
                                         .slice(currentPage, commentsPerPage)
                                         .map((comment) => (
-                                        
+                                           
                                             <div
                                                 key={comment.id}
                                                 className=" sm:items-start mb-2"
-                                               
-                                            >
-                                                <article className="border-t border-gray-200 p-6 text-base bg-gray-50 rounded-md">
+                                            //ml-8 bg-gray-100 text-sm for commentsReplies
+                                            > 
+                                                <article className={`border-t border-gray-200 p-6  rounded-md ${comment.parent_id !=null ? 'hidden':'bg-gray-50 text-base'}` }>
                                                     <footer className="mb-2 flex items-center justify-between">
                                                         <div className="flex items-center">
                                                             <p className="mr-3 inline-flex items-center text-sm text-gray-900">
@@ -192,9 +194,11 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                         {comment.comment_body}
                                                     </p>
                                                 </article>
-
-                                                {comment.replies.map(
-                                                       //replies to comments TODO: add filter show less replies at ounce
+                                                {/* view replies */}
+                                                {comment.replies.length > 0 && (
+                                                    <button onClick={()=>setShowReplies(!showReplies)} className={`text-xs text-zinc-600 cursor-pointer ml-3 ${comment.parent_id !=null ? 'hidden':''}`}>{`${showReplies ? 'hide replies':'view replies'}`}</button>
+                                                )}
+                                                {showReplies && comment.replies.map(
                                                     (response) => (
                                                         <article
                                                             className="p-6 mb-6 ml-6 lg:ml-12 text-base bg-gray-300 rounded-lg"
@@ -280,8 +284,9 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     id="chat"
                                                     rows="2"
                                                     className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-gray-40 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                                    placeholder="@username"
-                                                    value={data.comment_body}
+                                                    placeholder={`Type your reply..`}
+                                                      
+                                                    value={ data.comment_body }
                                                     onChange={(e) =>
                                                         setData(
                                                             "comment_body",
@@ -429,13 +434,13 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                 <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => {setShowModal(false); setReply(false)}}
                                         className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm"
                                     >
                                         Done
                                     </button>
                                     <button
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => {setShowModal(false); setReply(false)}}
                                         type="button"
                                         className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
                                     >

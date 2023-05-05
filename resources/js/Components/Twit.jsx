@@ -12,7 +12,7 @@ import Comments from "@/Pages/Twits/Comments";
 dayjs.extend(relativeTime);
 function Twit({ twit }) {
     //use auth
-    const { auth } = usePage().props;
+    const { auth,comments } = usePage().props;
     //state
     const [edit, setEdit] = useState(false);
 
@@ -228,7 +228,12 @@ function Twit({ twit }) {
                 <span className="text-xs mr-2">0 Likes</span>
                 {twit.comments.length > 0 ? (
                     <span className="text-xs text-zinc-600 cursor-pointer" onClick={() => setShowModal(true)}>
-                        <strong>{twit.comments.length === 1 ? `${twit.comments.length} Comment`: `${twit.comments.length} Comments`}</strong>
+                        <strong>{twit.comments.length === 1 ? `${twit.comments.length} Comment`: `${twit.comments.filter(element => {
+                            if(element.parent_id == null){
+                                return true;
+                            }
+                            // return false;
+                        }).length} Comments`}</strong>
                     </span>
                 ) : null}
                 <hr className="hr mb-1" />
