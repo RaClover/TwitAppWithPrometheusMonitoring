@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -52,6 +53,11 @@ class User extends Authenticatable
     // defining a relationship betwen user and comment..
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    // defining a relationship betwen user and like..
+    public function likes() {
+        return $this->hasMany(Like::class);
     }
 
    

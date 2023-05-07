@@ -5,14 +5,15 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Dropdown from "./Dropdown";
 import PrimaryButton from "@/Components/PrimaryButton";
 import InputError from "@/Components/InputError";
-import { useForm, usePage } from "@inertiajs/inertia-react";
+import { useForm, usePage,router } from "@inertiajs/inertia-react";
 import ImageViewer from "react-simple-image-viewer";
 import Comments from "@/Pages/Twits/Comments";
+import Like from "@/Components/Like";
 
 dayjs.extend(relativeTime);
 function Twit({ twit }) {
     //use auth
-    const { auth,comments } = usePage().props;
+    const { auth } = usePage().props;
     //state
     const [edit, setEdit] = useState(false);
 
@@ -20,9 +21,10 @@ function Twit({ twit }) {
     const [currentImage, setCurrentImage] = useState([]);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
 
+   
     //comments state
     const [showModal, setShowModal] = useState(false);
-    // const [onHideModal, setOnHideModal] = useState(false);
+
 
     //open image viewer
     const openImageViewer = useCallback((index) => {
@@ -51,6 +53,7 @@ function Twit({ twit }) {
         );
     };
 
+    
     //submit
     const submit = (e) => {
         e.preventDefault();
@@ -224,7 +227,6 @@ function Twit({ twit }) {
                 </div>
             </div>
             <div className="px-4 ">
-                {/* TODO: fix likes */}
                 <span className="text-xs mr-2">0 Likes</span>
                 {twit.comments.length > 0 ? (
                     <span className="text-xs text-zinc-600 cursor-pointer" onClick={() => setShowModal(true)}>
@@ -237,17 +239,7 @@ function Twit({ twit }) {
                     </span>
                 ) : null}
                 <hr className="hr mb-1" />
-                <button type="button" className="items-center inline-flex pr-3">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 512 512"
-                        className="w-5 h-5 fill-current"
-                    >
-                        <path d="M453.122,79.012a128,128,0,0,0-181.087.068l-15.511,15.7L241.142,79.114l-.1-.1a128,128,0,0,0-181.02,0l-6.91,6.91a128,128,0,0,0,0,181.019L235.485,449.314l20.595,21.578.491-.492.533.533L276.4,450.574,460.032,266.94a128.147,128.147,0,0,0,0-181.019ZM437.4,244.313,256.571,425.146,75.738,244.313a96,96,0,0,1,0-135.764l6.911-6.91a96,96,0,0,1,135.713-.051l38.093,38.787,38.274-38.736a96,96,0,0,1,135.765,0l6.91,6.909A96.11,96.11,0,0,1,437.4,244.313Z"></path>
-                    </svg>
-                    <span className="p-2">Like</span>
-                </button>
-
+                <Like twitId={twit.id} twitCount={twit.likes} />
                 <button
                     className="rounded-full relative inline-flex items-center p-1 text-sm font-medium text-center text-black"
                     onClick={() => setShowModal(true)}

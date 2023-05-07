@@ -35,7 +35,12 @@ class Twit extends Model
         return $this->hasMany(Comment::class,'twit_id','id');
     }
 
-    //fetch twits with comments 
+    //relation between twit and likes: Each twit can have many likes
+    public function likes(){
+        return $this->hasMany(Like::class);
+    }
+
+ 
 
 
 

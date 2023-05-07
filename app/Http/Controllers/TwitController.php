@@ -28,7 +28,7 @@ class TwitController extends Controller
             //we fetch the twits ordering by the latest 
             
             //fetch twits, users and related comments, get by latest
-            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar','comments.replies','comments.replies.user'])->latest()->get(),
+            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar','comments.replies','comments.replies.user','likes'])->latest()->get(),
             // get comment with replies
             // 'comments' => Comment::with('replies')->get(),
             // 'comments'=>Comment::whereNull('parent_id')->get()
