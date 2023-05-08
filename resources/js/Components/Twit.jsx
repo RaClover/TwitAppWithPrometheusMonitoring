@@ -227,7 +227,7 @@ function Twit({ twit }) {
                 </div>
             </div>
             <div className="px-4 ">
-                <span className="text-xs mr-2">0 Likes</span>
+                {/* <span className="text-xs mr-2">0 Likes</span> */}
                 {twit.comments.length > 0 ? (
                     <span className="text-xs text-zinc-600 cursor-pointer" onClick={() => setShowModal(true)}>
                         <strong>{twit.comments.length === 1 ? `${twit.comments.length} Comment`: `${twit.comments.filter(element => {

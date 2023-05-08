@@ -15,6 +15,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         name: user.name,
         email: user.email,
         avatar:user.avatar,
+        description:user.description,
     });
 
     const submit = (e) => {
@@ -80,6 +81,21 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                     />
 
                     <InputError className="mt-2" message={errors.email} />
+                </div>
+                <div>
+                    <InputLabel for="description" value="Description" />
+                    <textarea
+                                value={data.description}
+                                id="description"
+                                rows ="2"
+                                className="w-full border-0border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                                onChange={(e) =>
+                                    setData("description", e.target.value)
+                                }
+                               
+                            />
+
+                    <InputError className="mt-2" message={errors.description} />
                 </div>
 
                 {mustVerifyEmail && user.email_verified_at === null && (
