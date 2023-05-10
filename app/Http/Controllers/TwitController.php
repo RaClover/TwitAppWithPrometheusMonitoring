@@ -130,7 +130,7 @@ class TwitController extends Controller
     {
         $this->authorize('update', $twit);
         //TODO: delete image if twit is updated
-        dd($request);
+     
         $img = $request->images;
         //remove only images patched in the $request object
         $removedImage = $request->json; 

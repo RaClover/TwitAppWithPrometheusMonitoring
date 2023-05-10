@@ -30,7 +30,7 @@ export default function Welcome(props) {
                                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-2">
                                     {props.twits.slice(0, 2).map((twit) => (
                                         <div
-                                            className="mt-6 bg-gray-200 overflow-hidden shadow sm:rounded-lg"
+                                            className="mt-6 bg-white overflow-hidden shadow sm:rounded-lg"
                                             key={twit.id}
                                         >
                                             <div className="add something">
@@ -41,9 +41,9 @@ export default function Welcome(props) {
                                                             src={`/uploads/avatar/${twit.user.avatar}`}
                                                             alt={twit.user.name}
                                                         />
-                                                        <div className="ml-4 text-lg leading-7 font-semibold text-white">
+                                                        <div className="ml-4 text-lg leading-7 font-semibold">
                                                             {twit.user.name}
-                                                            <small className="ml-2 text-sm text-gray-300">
+                                                            <small className="ml-2 text-sm text-blue-500">
                                                                 {dayjs(
                                                                     twit.created_at
                                                                 ).fromNow()}
@@ -59,10 +59,10 @@ export default function Welcome(props) {
                                                         </div>
                                                     </div>
                                                     <div className="ml-12">
-                                                        <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
+                                                        <div className="mt-2 text-gray-800 text-sm">
                                                             {twit.message}
-                                                            <p className="text-black mt-1">
-                                                                {twit.images.length > 0 &&
+                                                            <p className="text-blue-400 mt-1">
+                                                                {twit.images && twit.images.length > 0 &&
                                                                     ("Sign to view images")}
                                                             </p>
                                                         </div>

@@ -25,9 +25,13 @@ export default function Authenticated({ auth, header, children }) {
                                  <NavLink href={route('twits.index')} active={route().current('twits.index')}>
                                     Twits
                                 </NavLink>
-                               <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                               {/* <NavLink href={route('dashboard')} active={route().current('dashboard')}>
                                     Dashboard
-                                </NavLink>
+                                </NavLink> */}
+                                {/* profile svg icon */}
+                                {/* <div className="ml-3 relative">
+                                 
+                                </div> */}
                                 <NavLink href={route('profile.edit')} active={route().current('profile.edit')}>
                                     Profile
                                 </NavLink>
