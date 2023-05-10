@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File; //delete file
+use Intervention\Image\Facades\Image;
 
 
 class TwitController extends Controller
@@ -36,7 +37,6 @@ class TwitController extends Controller
             'replies'=>Comment::whereNotNull('parent_id')->with(['user:id,name,avatar'])->latest()->get(),
             //RETURNS COMMENTS
             'comments'=>Comment::whereNull('parent_id')->with(['user:id,name,avatar'])->latest()->get()
-
 
 
         ]);
@@ -78,7 +78,11 @@ class TwitController extends Controller
         if ($request->hasFile('images')) {
             foreach ($validated['images'] as $image) {
                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('/uploads/images'), $imageName);
+                $path = public_path('uploads/images/'.$imageName);
+                Image::make($image->getRealPath())->resize(800,null, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($path);
+                // $image->move(public_path('/uploads/images'), $imageName);
                 array_push($images, $imageName);
             }
             $message = $validated['message'];
@@ -113,13 +117,7 @@ class TwitController extends Controller
      * @param  \App\Models\Twit  $twit
      * @return \Illuminate\Http\Response
      */
-    public function removeImage(Twit $twit)
-    {
-        //TODO:unlink image
-        //TODO: add comment/replies/likes/disklikes
-
-
-    }
+   
 
     /**
      * Update the specified resource in storage.
@@ -130,24 +128,24 @@ class TwitController extends Controller
      */
     public function update(Request $request, Twit $twit)
     {
-        //by default authorize prevents everyone/ Authorize method::create a policy to allow users.
         $this->authorize('update', $twit);
         //TODO: delete image if twit is updated
+        dd($request);
+        $img = $request->images;
+        //remove only images patched in the $request object
+        $removedImage = $request->json; 
+        if (!is_array($img)) {
+            //get images in request changes object 
+            foreach ($img as $image) {
+                if (isset($twit->images)) {
+                    if (in_array($image, $twit->images)) {
+                        unlink(public_path('/uploads/images/') . $image);
+                        }
+                }
+                
+            }
 
-        // $imgs = $request->images;
-    
-        // if(count($imgs) >= 1) {
-        //     // dd($imgs);
-        //     foreach ($imgs as $image) {
-        //         if (file_exists(public_path('/uploads/images/'.$image))) {
-        //             // dd($image);
-                    
-        //             unlink(public_path('/uploads/images/'. $image));
-        //             // dd(public_path('/uploads/images/'.$image));
-        //             // File::delete(public_path('/uploads/images/'.$image));
-        //         }
-        //     }
-        // }
+        }
 
         //validate 
         $validated = $request->validate([
@@ -168,19 +166,16 @@ class TwitController extends Controller
      */
     public function destroy(Twit $twit)
     {
-
         //to delete a twit, we need athorize
-        $this->authorize('delete', $twit); //authorize deleting
-
-        //from db
+        $this->authorize('delete', $twit); 
+        //i'm getting images in images column
         $img = $twit->images;
-
-        //if images not NULL from db
-        if ($img) {
-            //loop through the array
+    
+        //if images not 0 from db
+        if (count($img) > 0) {
             foreach ($img as $image) {
-                //image exists in public folder
-                if (file_exists($image)) {
+                //image exists in public images
+                if (file_exists(public_path('/uploads/images/').$image)) {
                     //remove it
                     unlink(public_path('/uploads/images/') . $image);
                 }
@@ -188,7 +183,7 @@ class TwitController extends Controller
         }
         //then remove record from db
         $twit->delete();
-        //remove comment 
+        //remove comments 
         $twit->comments()->delete();
         //redirect
         return redirect(route('twits.index'));

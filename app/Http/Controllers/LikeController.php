@@ -36,9 +36,7 @@ class LikeController extends Controller
      */
     public function store(Request $request)
     {
-        //if liked unlike
-        //if user has already liked twit then unlike 
-        //if user has not liked twit then like
+        
         $isLiked = Like::where('user_id', Auth::user()->id)
         ->where('twit_id', $request->get('twit_id'))
         ->first();

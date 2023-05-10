@@ -16,10 +16,10 @@ export default function Welcome(props) {
                         <div className="w-full sm:w-1/2">
                             <div className="max-w-3xl">
                                 <h1 className="font-alt-40 text-solar-700 mb-4 text-xl uppercase tracking-wider lg:text-2xl">
-                                    .....
+                                  
                                 </h1>
                                 <h2 className="lg:text-66xl md:tracking-tightish leading-extra-tight mb-6 font-serif text-5xl md:mb-8 md:text-6xl">
-                                    TwitBook
+                                    Twit-teer
                                 </h2>
                                 <p className="text-charcoal-500 mb-8 text-lg md:mb-10 lg:mb-12 lg:text-xl xl:text-2xl">
                                     Connect with everyone and interact with
@@ -30,7 +30,7 @@ export default function Welcome(props) {
                                 <div className="max-w-6xl mx-auto sm:px-6 lg:px-2">
                                     {props.twits.slice(0, 2).map((twit) => (
                                         <div
-                                            className="mt-6 bg-gray-600 overflow-hidden shadow sm:rounded-lg"
+                                            className="mt-6 bg-gray-200 overflow-hidden shadow sm:rounded-lg"
                                             key={twit.id}
                                         >
                                             <div className="add something">
@@ -61,9 +61,9 @@ export default function Welcome(props) {
                                                     <div className="ml-12">
                                                         <div className="mt-2 text-gray-600 dark:text-gray-400 text-sm">
                                                             {twit.message}
-                                                            <p className="text-red-400 mt-1">
-                                                                {twit.images &&
-                                                                    "Sign to view images"}
+                                                            <p className="text-black mt-1">
+                                                                {twit.images.length > 0 &&
+                                                                    ("Sign to view images")}
                                                             </p>
                                                         </div>
                                                     </div>
