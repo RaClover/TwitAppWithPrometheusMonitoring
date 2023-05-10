@@ -36,6 +36,7 @@ class ProfileController extends Controller
         $request->validated([
 
             'avatar' => 'nullable|image|max:2048',
+            'description'=> 'nullable|string|max:256'
 
         ]);
 
@@ -48,7 +49,9 @@ class ProfileController extends Controller
             $request->user()->update(['avatar' => $avatarName]);
         }
 
-
+          //save description 
+            $request->user()->update(['description' => $request->description]);
+              
 
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;

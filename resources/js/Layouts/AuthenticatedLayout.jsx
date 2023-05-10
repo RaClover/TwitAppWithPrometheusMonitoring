@@ -22,11 +22,18 @@ export default function Authenticated({ auth, header, children }) {
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">                               
-                               <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
                                  <NavLink href={route('twits.index')} active={route().current('twits.index')}>
                                     Twits
+                                </NavLink>
+                               {/* <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                    Dashboard
+                                </NavLink> */}
+                                {/* profile svg icon */}
+                                {/* <div className="ml-3 relative">
+                                 
+                                </div> */}
+                                <NavLink href={route('profile.edit')} active={route().current('profile.edit')}>
+                                    Profile
                                 </NavLink>
                             </div>
                         </div>
@@ -40,8 +47,11 @@ export default function Authenticated({ auth, header, children }) {
                                                 type="button"
                                                 className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
                                             >
-                                                {auth.user.name}
-
+                                                <div className="ml-3 relative">
+                                            <img id="avatarButton" type="button" data-dropdown-toggle="userDropdown" data-dropdown-placement="bottom-start" className="w-10 h-10 border border-gray-300 bg-red-200 rounded-full cursor-pointer mr-2" src={'/uploads/avatar/' +`${auth.user.avatar}`} alt="User dropdown" />
+                                            <span className="top-0 left-7 absolute  w-3.5 h-3.5 bg-green-400 border-2 border-white rounded-full"></span>
+                                            </div>
+                                                    {auth.user.name}
                                                 <svg
                                                     className="ml-2 -mr-0.5 h-4 w-4"
                                                     xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +64,9 @@ export default function Authenticated({ auth, header, children }) {
                                                         clipRule="evenodd"
                                                     />
                                                 </svg>
+                                             
                                             </button>
+                                            
                                         </span>
                                     </Dropdown.Trigger>
 
