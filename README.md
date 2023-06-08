@@ -19,7 +19,7 @@ and he can answer (replay) for that comment .
 
 
 <details>
-<summary> ## I have used </summary>
+<summary>I have used </summary>
  
 
 - Docker
