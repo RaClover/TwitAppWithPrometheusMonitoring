@@ -330,6 +330,106 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 }
 ```
 
+8. Отправка логики при регистрации пользователя в elasticsearch :
+
+Я использовал некоторые журналы в классе RegisterController.
+когда пользователь зарегистрируется, журналы будут отправлены в elasticsearch с
+сообщением о том, что зарегистрирован новый пользователь.<br><br><br><br>
+
+$request->validate([...]): Выполняет проверку входящих данных из запроса на соответствие определенным правилам валидации.
+
+'name' => 'required|string|max:255': Поле "name" обязательно для заполнения, должно быть строкой и иметь максимальную длину 255 символов.
+'email' => 'required|string|email|max:255|unique:'.User::class: Поле "email" обязательно для заполнения, должно быть строкой, должно быть валидным email-адресом, иметь максимальную длину 255 символов и быть уникальным в таблице "users".
+'password' => ['required', 'confirmed', Rules\Password::defaults()]: Поле "password" обязательно для заполнения, должно быть подтверждено с помощью дополнительного поле "password_confirmation" и должно соответствовать правилам, определенным в классе Rules\Password::defaults().
+$user = User::create([...]): Создает новую запись пользователя в базе данных, используя метод create модели User. Используются значения из запроса для полей "name", "email" и "password". Пароль хешируется с помощью Hash::make().
+
+event(new Registered($user)): Генерирует событие Registered, которое может быть обработано другими слушателями (listeners). Это позволяет выполнять дополнительные действия при регистрации нового пользователя.
+
+Auth::login($user): Выполняет вход пользователя в систему, автоматически аутентифицируя его.
+
+LogsController::sendLogs([...]): Вызывает статический метод sendLogs в LogsController для отправки логов. Передает сообщение "New user has registered", уровень лога "info" и данные о зарегистрированном пользователе (имя и электронная почта).
+
+return redirect(RouteServiceProvider::HOME): Возвращает перенаправление на определенный маршрут, указанный в RouteServiceProvider::HOME (обычно это домашняя страница после успешной регистрации пользователя).
+
+```bash
+
+ public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:'.User::class,
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+
+        event(new Registered($user));
+
+        Auth::login($user);
+        LogsController::sendLogs('New user has registered' , 'info' , $request->name , $request->email);
+
+        return redirect(RouteServiceProvider::HOME);
+    }
+    
+ ```
+
+8. Отправка логики когда пользователь зарегистрировал twit (post) в elasticsearch :
+
+представляет метод store в контроллере, который обрабатывает сохранение нового твита (сообщения).
+LogsController::sendLogs([...]): Вызывает статический метод sendLogs в LogsController для отправки логов. Передает сообщение "Twit has been added", уровень лога "info" 
+и данные о пользователе, который добавил твит (имя и электронная почта).
+
+```bash
+ public function store(Request $request)
+    {
+        // TODO: learn more about laravel validation
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+            'images' => 'array | max:3'
+        ]);
+        $images = [];
+        $message = '';
+
+        //if images are present, we loop through them and save them to the public folder
+        if ($request->hasFile('images')) {
+            foreach ($validated['images'] as $image) {
+                $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
+                $path = public_path('uploads/images/'.$imageName);
+                Image::make($image->getRealPath())->resize(800,null, function($constraint){
+                    $constraint->aspectRatio();
+                })->save($path);
+                // $image->move(public_path('/uploads/images'), $imageName);
+                array_push($images, $imageName);
+            }
+            $message = $validated['message'];
+
+            $request->user()->twits()->create([
+                'message' => $message,
+                'images' => $images
+            ]);
+            // Log an info message
+
+            LogsController::sendLogs("Twit has been added" , 'info', auth()->user()->name , auth()->user()->email);
+
+        } else {
+            $request->user()->twits()->create([
+                'message' => $validated['message'],
+            ]);
+        }
+        LogsController::sendLogs("Twit has been added" , 'info', auth()->user()->name , auth()->user()->email);
+
+        //then redirect
+        return redirect(route('twits.index'));
+    }
+ ```
+
+
+
 
 
 
