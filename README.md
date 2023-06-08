@@ -19,7 +19,7 @@ and he can answer (replay) for that comment .
 
 
 <details>
- <summary><span style="font-size: 18px;">I have used</span></summary>
+ <summary><h2>I have used</h2></summary>
  
 
 - Docker
