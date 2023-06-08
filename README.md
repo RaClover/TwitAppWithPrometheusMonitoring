@@ -524,7 +524,7 @@ You can add multiple paragraphs, lists, code snippets, and other Markdown elemen
   <summary>Screen shots</summary>
 
 ### 1. Screen shot of the login page
-![Login Page](path/to/login-screenshot.png)
+![Login Page](Images/ConsoleImage.jpg)
 
 Explanation or additional information about the login page.
 
