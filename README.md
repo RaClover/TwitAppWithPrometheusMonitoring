@@ -520,4 +520,21 @@ This is the content of the collapsible section.
 You can add multiple paragraphs, lists, code snippets, and other Markdown elements here.
 </details>
 
+<details>
+  <summary>Screen shots</summary>
+
+### 1. Screen shot of the login page
+![Login Page](path/to/login-screenshot.png)
+
+Explanation or additional information about the login page.
+
+### 2. Screen shot of the registration page
+![Registration Page](path/to/registration-screenshot.png)
+
+Explanation or additional information about the registration page.
+
+  <!-- Add more steps and screenshots as needed -->
+
+</details>
+
 
