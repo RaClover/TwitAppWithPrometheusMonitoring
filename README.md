@@ -7,8 +7,8 @@ User can register to the website and he will see all the posts from the other us
 he can see his post , edit it or delete it .and also he can comment in any post.The user also can see the comments of his post that are came from the other users,
 and he can answer (replay) for that comment . 
 
-
-## Table of Contents
+<details>
+<summary><h2>Table of Contents</h2></summary>
 
 - [Requirements](#requirements)
 - [Installation](#installation)
@@ -16,7 +16,7 @@ and he can answer (replay) for that comment .
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
-
+</details>
 
 <details>
  <summary><h2>I have used</h2></summary>
@@ -30,6 +30,9 @@ and he can answer (replay) for that comment .
 - Elasticsearch for getting the logs from the application
 - Kibana to see the logs that are in elasticsearch that comes from the application
 - Grafana to see the logs also from elasticsearch
+
+</details>
+
 
 ## Steps that I have made for this project
 
@@ -254,7 +257,6 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 }
 ```
 
-</details>
 
 <details>
   <summary>ENd</summary>
