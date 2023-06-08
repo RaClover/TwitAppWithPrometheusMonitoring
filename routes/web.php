@@ -7,6 +7,7 @@ use App\Http\Controllers\LikeController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\LogsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [TwitController::class,'welcome']); //public for guest page
+Route::get('/logs', [LogsController::class,'retrieveLogs']); // for logs
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
