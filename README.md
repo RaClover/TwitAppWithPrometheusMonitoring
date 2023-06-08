@@ -529,11 +529,141 @@ You can add multiple paragraphs, lists, code snippets, and other Markdown elemen
 Explanation or additional information about the login page.
 
 ### 2. Screen shot of the registration page
-![Registration Page](path/to/registration-screenshot.png)
+![Registration Page](Images/DockerContainersImage.jpg)
 
 Explanation or additional information about the registration page.
 
-  <!-- Add more steps and screenshots as needed -->
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/DockerIagesImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/LoginImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/RegisterImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/HomePageImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/CommentImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/UpdateTwitImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/ElasticJsonImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/CreateIndexPatternImage.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/CreateIndexPatternImage2.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaData1.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaLogsList.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaLogsList2.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaLogsList3.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaLogsJson.jpg)
+
+Explanation or additional information about the registration page.
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/KibanaLogsStatus.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/Grafana1.jpg)
+
+Explanation or additional information about the registration page.
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/grafana2.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/grafana3.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/GrafanaLogs.jpg)
+
+Explanation or additional information about the registration page.
+
+
+
+
+### 2. Screen shot of the registration page
+![Registration Page](Images/GrafanaLogs2.jpg)
+
+Explanation or additional information about the registration page.
+
+
 
 </details>
 
