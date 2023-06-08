@@ -10,8 +10,8 @@ and he can answer (replay) for that comment .
 
 <details>
  <summary><h2>Table of Contents</h2></summary>
- 
 
+- Laravel v10
 - Docker
 - Node.js & NPM
 - Reactjs
@@ -425,6 +425,92 @@ LogsController::sendLogs([...]): Вызывает статический мет�
 
 
 </details>
+
+
+<details>
+  <summary>Шаги по использованию и запуску проекта Laravel</summary>
+
+1. Клонируйте репозиторий на свой локальный компьютер, используя следующую команду:
+   ```bash
+   git clone https://github.com/RaClover/TwitAppWithElasticsearch.git
+   ```
+
+2. Измените текущий каталог на TwitAppWithElasticsearch:
+   ```bash
+   cd TwitAppWithElasticsearch
+   ```
+
+
+3. Установите зависимости проекта с помощью Composer:
+   ```bash
+   composer install
+   ```
+
+
+4. Создайте копию файла .env.example:
+   ```bash
+   cp .env.example .env
+   ```
+
+
+5. Сгенерируйте новый ключ приложения для Laravel:
+   ```bash
+   php artisan key:generate
+   ```
+
+
+6. Запустите контейнеры Docker:
+   ```bash
+   docker-compose up -d
+   ```
+
+
+7. Перечислите запущенные в данный момент контейнеры Docker:
+   ```bash
+   docker ps 
+   ```
+
+
+8. Войдите в контейнер Docker с именем laravel_app и откройте терминальную сессию (bash) внутри контейнера.:
+   ```bash
+   docker exec -it laravel_app bash 
+   ```
+
+
+9. Запустите миграцию базы данных с помощью команды Laravel Artisan:
+   ```bash
+   php artisan migrate:fresh 
+   ```
+
+
+10. откройте проект laravel:
+   ```bash
+   http://localhost:8000 
+   ```
+
+11. откройте страницу elasticsearch:
+   ```bash
+   http://localhost:9200
+   ```
+
+12. открыть страницу Kibana:
+   ```bash
+   http://localhost:5601
+   ```
+
+13. открыть страницу Grafana:
+   ```bash
+   http://localhost:8080
+   ```
+or 
+ ```bash
+   http://localhost:3000
+   ```
+   
+
+</details>
+
+
 
 <details>
   <summary>ENd</summary>
