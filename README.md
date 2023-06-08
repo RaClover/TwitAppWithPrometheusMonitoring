@@ -251,4 +251,12 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 }
 ```
 
+<details>
+  <summary>Click to expand/collapse</summary>
+
+This is the content of the collapsible section.
+
+You can add multiple paragraphs, lists, code snippets, and other Markdown elements here.
+</details>
+
 
