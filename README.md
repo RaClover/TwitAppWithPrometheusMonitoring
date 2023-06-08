@@ -38,14 +38,12 @@ and he can answer (replay) for that comment .
  <summary><h2>Steps that I have made for this project</h2></summary>
 
 
-<details>
- <summary><h3>1. Make the docker-compose file with the images (app, mysql, elasticsearch , kibana , grafana):</h3></summary>
 
+1. Make the docker-compose file with the images (app, mysql, elasticsearch , kibana , grafana):
 
 ```bash
 git clone https://github.com/yourusername/yourlaravelproject.git
 ```
-</details>
 
 2. Clone the repository:
 
