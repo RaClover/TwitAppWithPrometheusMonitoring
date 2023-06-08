@@ -575,7 +575,7 @@ or
 ![Registration Page](Images/CreateIndexPatternImage2.jpg)
 
 
-### 12. Снимок экрана с данными logs kibana
+### 12. Скриншот экрана с данными logs kibana
 ![Registration Page](Images/KibanaData1.jpg)
 
 теперь мы видим, что в индексе twit_logs есть данные.
