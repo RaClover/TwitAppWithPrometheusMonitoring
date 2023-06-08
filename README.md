@@ -41,7 +41,48 @@ and he can answer (replay) for that comment .
 
 
 
-1. Make the docker-compose file with the images (app, mysql, elasticsearch , kibana , grafana):
+1. Создайте файл docker-compose с изображениями (app, mysql, elasticsearch, kibana, grafana):
+
+Представляет файл docker-compose.yml, который определяет конфигурацию сервисов и их зависимостей в Docker-контейнерах.
+version: '3.8': Определяет версию синтаксиса для файла docker-compose.yml (версия 3.8).
+
+services: Определяет список сервисов, которые будут запущены в контейнерах.
+
+app: Описывает сервис приложения Laravel.
+
+build: Указывает, что контейнер будет построен на основе Docker-образа, используя Dockerfile из текущего контекста.
+container_name: Задает имя контейнера (laravel_app).
+ports: Открывает порт хоста 8000 и перенаправляет его на порт контейнера 8000.
+volumes: Монтирует текущую директорию внутрь контейнера в директорию /var/www/html.
+depends_on: Задает зависимость от сервиса "mysql".
+mysql: Описывает сервис базы данных MySQL.
+
+image: Указывает Docker-образ, который будет использован (mysql:8.0).
+ports: Открывает порт хоста 3307 и перенаправляет его на порт контейнера 3306.
+environment: Задает переменные окружения для конфигурации MySQL.
+volumes: Создает Docker Volume для хранения данных MySQL.
+elasticsearch: Описывает сервис Elasticsearch.
+
+image: Указывает Docker-образ Elasticsearch (elasticsearch:7.6.2).
+container_name: Задает имя контейнера (elasticsearch).
+environment: Задает переменные окружения для конфигурации Elasticsearch.
+ports: Открывает порт хоста 9200 и перенаправляет его на порт контейнера 9200.
+deploy: Определяет конфигурацию развертывания сервиса Elasticsearch.
+kibana: Описывает сервис Kibana.
+
+image: Указывает Docker-образ Kibana (kibana:7.6.2).
+container_name: Задает имя контейнера (kibana).
+ports: Открывает порт хоста 5601 и перенаправляет его на порт контейнера 5601.
+depends_on: Задает зависимость от сервиса "elasticsearch".
+grafana: Описывает сервис Grafana.
+
+image: Указывает Docker-образ Grafana (grafana/grafana).
+container_name: Задает имя контейнера (grafana).
+ports: Открывает порт хоста 8080 и перенаправляет его на порт контейнера 3000.
+depends_on: Задает зависимость от сервиса "elasticsearch".
+volumes: Определяет список Docker Volumes, которые будут использоваться контейнерами.
+
+twit_mysql_data: Создает Docker Volume с именем "twit_mysql_data" для хранения данных MySQL.
 
 ```bash
 version: '3.8'
@@ -146,8 +187,8 @@ RUN composer install
 CMD php artisan serve --host=0.0.0.0 --port=8000
 
 ```
-3. Install docker / docker desktop
-4. Configure the .env file : 
+3. Установите docker<br><br><br>
+4. Настроить файл .env :
 
 Elasticsearch:
 
@@ -180,13 +221,29 @@ DB_DATABASE=chirper
 DB_USERNAME=root
 DB_PASSWORD=mysecretpassword
 ```
-5. Install the elasticsearch using composer : 
+5. Установите elasticsearch с помощью composer :
 
 ```bash
 composer require elasticsearch/elasticsearch
 ```
 
-6. Configure the channels in config/logging.php :
+6. Настройте каналы в config/logging.php :
+
+Этот код представляет собой конфигурацию каналов логирования в Laravel. Вот краткое объяснение каждого блока:
+
+'stack' канал:
+
+'driver' => 'stack': Использует драйвер "stack" для объединения нескольких каналов логирования.
+'channels' => ['single', 'elasticsearch']: Определяет список каналов, которые будут использоваться в стеке. В данном случае, используются каналы "single" и "elasticsearch".
+'ignore_exceptions' => false: Указывает, что исключения не будут игнорироваться и будут логироваться.
+'elasticsearch' канал:
+
+'driver' => 'custom': Использует пользовательский драйвер "custom" для канала.
+'via' => App\Logging\ElasticsearchLogger::class: Задает класс ElasticsearchLogger в приложении, который будет использоваться для записи логов в Elasticsearch.
+'client' => Elasticsearch\ClientBuilder::fromConfig([...]): Конфигурация клиента Elasticsearch, который будет использоваться для отправки логов.
+'index' => 'twit_logs': Имя индекса Elasticsearch, в который будут сохраняться логи. Вы можете настроить это имя по вашему усмотрению.
+'level' => 'info': Устанавливает уровень логирования для канала (info - информационные сообщения и выше будут логироваться).
+
 
 ```bash
   'channels' => [
@@ -215,7 +272,26 @@ composer require elasticsearch/elasticsearch
     ],
 ```
 
-7. Make App\Logging\ElasticsearchLogger class with this content :
+7. Создайте класс App\Logging\Elasticsearch Logger с этим содержимым :
+
+Этот код представляет пользовательский класс ElasticsearchLogger, 
+который расширяет AbstractProcessingHandler из пакета Monolog.private $elasticsearch и 
+private $index: Приватные свойства класса, которые содержат объект клиента Elasticsearch 
+и имя индекса для сохранения логов.
+
+__construct(Client $elasticsearch, $index, $level = Logger::DEBUG, bool $bubble = true): 
+Конструктор класса, который принимает объект клиента Elasticsearch, имя индекса, уровень логирования 
+(по умолчанию DEBUG) и флаг bubble (по умолчанию true).
+
+protected function write(array $record): void: Защищенный метод, который выполняет запись логов. 
+Он вызывается при каждой записи лога.
+DateTime и DateTimeZone: Создает объект DateTime с текущим временным штампом в формате UTC.
+$formattedTimestamp: Форматирует временной штамп в нужном формате.
+if ($record['level'] >= $this->level): Проверяет, достигает ли уровень лога минимального уровня,
+чтобы быть записанным в Elasticsearch.
+$this->elasticsearch->index([...]): Использует объект клиента Elasticsearch для 
+индексации (сохранения) логов в Elasticsearch. Индекс, сообщение, уровень лога, контекст 
+и отформатированный временной штамп передаются в теле индексации.
 
 ```bash
 class ElasticsearchLogger extends AbstractProcessingHandler
