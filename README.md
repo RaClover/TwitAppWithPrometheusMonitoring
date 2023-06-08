@@ -101,7 +101,23 @@ volumes:
 
 ```
 
-3. Make the Dockerfile:
+3. Создать Dockerfile:
+
+FROM php:8.2.0-fpm: Определяет базовый образ с PHP версии 8.2.0 и модулем FPM.
+
+WORKDIR /var/www/html: Устанавливает рабочую директорию внутри образа на /var/www/html.
+
+RUN apt-get update && apt-get install -y: Обновляет списки пакетов и устанавливает системные зависимости.
+
+&& docker-php-ext-install zip pdo_mysql pdo_pgsql: Устанавливает расширения PHP для работы с ZIP, MySQL и PostgreSQL.
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer: Устанавливает Composer, менеджер зависимостей для PHP.
+
+COPY . .: Копирует содержимое текущей директории (где находится Dockerfile) в рабочую директорию внутри образа.
+
+RUN composer install: Устанавливает зависимости приложения с помощью Composer.
+
+CMD php artisan serve --host=0.0.0.0 --port=8000: Устанавливает команду по умолчанию для запуска PHP-сервера разработки с помощью интерфейса командной строки artisan в Laravel. Сервер настроен на прослушивание всех сетевых интерфейсов (--host=0.0.0.0) и порта 8000 (--port=8000).
 
 ```bash
 FROM php:8.2.0-fpm
@@ -129,6 +145,22 @@ CMD php artisan serve --host=0.0.0.0 --port=8000
 ```
 4. Install docker / docker desktop
 5. Configure the .env file : 
+
+Elasticsearch:
+
+ELASTICSEARCH_HOST=elasticsearch: Хост Elasticsearch, где elasticsearch указывает на имя хоста Elasticsearch.
+ELASTICSEARCH_PORT=9200: Порт Elasticsearch, где 9200 указывает на номер порта для подключения к Elasticsearch.
+ELASTICSEARCH_SCHEME=http: Протокол для подключения к Elasticsearch, где http указывает на использование протокола HTTP.
+ELASTICSEARCH_USER=: Пользователь Elasticsearch (не указано).
+ELASTICSEARCH_PASS=: Пароль для пользователя Elasticsearch (не указано).
+MySQL:
+
+DB_CONNECTION=mysql: Тип соединения с базой данных MySQL.
+DB_HOST=mysql: Хост базы данных MySQL, где mysql указывает на имя хоста.
+DB_PORT=3306: Порт базы данных MySQL, где 3306 указывает на номер порта для подключения к MySQL.
+DB_DATABASE=chirper: Имя базы данных MySQL, где chirper указывает на имя базы данных.
+DB_USERNAME=root: Имя пользователя для подключения к базе данных MySQL, где root указывает на имя пользователя.
+DB_PASSWORD=mysecretpassword: Пароль пользователя для подключения к базе данных MySQL, где mysecretpassword указывает на пароль.
 
 ```bash
 ELASTICSEARCH_HOST=elasticsearch
