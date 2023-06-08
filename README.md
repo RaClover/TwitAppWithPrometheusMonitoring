@@ -7,19 +7,9 @@ User can register to the website and he will see all the posts from the other us
 he can see his post , edit it or delete it .and also he can comment in any post.The user also can see the comments of his post that are came from the other users,
 and he can answer (replay) for that comment . 
 
-<details>
-<summary><h2>Table of Contents</h2></summary>
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-  - [Configuration](#configuration)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
-</details>
 
 <details>
- <summary><h2>I have used</h2></summary>
+ <summary><h2>Table of Contents</h2></summary>
  
 
 - Docker
