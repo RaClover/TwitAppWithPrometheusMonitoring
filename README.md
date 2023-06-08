@@ -523,147 +523,136 @@ You can add multiple paragraphs, lists, code snippets, and other Markdown elemen
 <details>
   <summary>Screen shots</summary>
 
-### 1. Screen shot of the login page
+### 1. Скриншот списка контейнеров в терминале
 ![Login Page](Images/ConsoleImage.jpg)
 
-Explanation or additional information about the login page.
+после запуска команды docker ps, теперь мы видим, что все контейнеры запущены
 
-### 2. Screen shot of the registration page
+### 2. Скриншот контейнеров на панели управления docker
 ![Registration Page](Images/DockerContainersImage.jpg)
 
-Explanation or additional information about the registration page.
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот изображений на панели управления docker
 ![Registration Page](Images/DockerIagesImage.jpg)
 
-Explanation or additional information about the registration page.
 
-
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы входа в систему
 ![Registration Page](Images/LoginImage.jpg)
 
-Explanation or additional information about the registration page.
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы регистрации
 ![Registration Page](Images/RegisterImage.jpg)
 
-Explanation or additional information about the registration page.
 
 
 
-### 2. Screen shot of the registration page
+### 2. скриншот главной страницы с Twig
 ![Registration Page](Images/HomePageImage.jpg)
 
-Explanation or additional information about the registration page.
 
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы комментариев
 ![Registration Page](Images/CommentImage.jpg)
 
-Explanation or additional information about the registration page.
+Пользователь может прокомментировать любой пост.
 
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы обновления
 ![Registration Page](Images/UpdateTwitImage.jpg)
 
-Explanation or additional information about the registration page.
+Пользователь также может обновить Twit (Post)
 
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы elasticsearch
 ![Registration Page](Images/ElasticJsonImage.jpg)
 
-Explanation or additional information about the registration page.
+страница elasticsearch возвращает json-файл со всеми данными.
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы kibana индекса
 ![Registration Page](Images/CreateIndexPatternImage.jpg)
 
-Explanation or additional information about the registration page.
+Скриншот страницы kibana для создания индекса (индекс, который я использовал в коде)
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы kibana индекса
 ![Registration Page](Images/CreateIndexPatternImage2.jpg)
 
-Explanation or additional information about the registration page.
 
-
-### 2. Screen shot of the registration page
+### 2. Снимок экрана с данными logs kibana
 ![Registration Page](Images/KibanaData1.jpg)
 
-Explanation or additional information about the registration page.
+теперь мы видим, что в индексе twit_logs есть данные.
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот logs kibana
 ![Registration Page](Images/KibanaLogsList.jpg)
 
-Explanation or additional information about the registration page.
+Мы видим, что в индексе twit_logs есть logs, полученные из elasticsearch , и они получены из проекта laravel.
 
 
 
-### 2. Screen shot of the registration page
+### 2. тоже Скриншот logs kibana
 ![Registration Page](Images/KibanaLogsList2.jpg)
 
-Explanation or additional information about the registration page.
+Теперь мы видим, что есть несколько logs с разными сообщениями ,
+например, что есть пользователь, который был зарегистрирован, и есть twit, который был добавлен пользователем.
 
 
-### 2. Screen shot of the registration page
+### 2. тоже Скриншот logs kibana
 ![Registration Page](Images/KibanaLogsList3.jpg)
 
-Explanation or additional information about the registration page.
 
-
-### 2. Screen shot of the registration page
+### 2. скриншот данных json из одного log
 ![Registration Page](Images/KibanaLogsJson.jpg)
 
-Explanation or additional information about the registration page.
+мы видим, что в Json есть данные log.
 
-### 2. Screen shot of the registration page
+### 2. скриншот статуса журналов kibana и статуса индекса twit_logs
 ![Registration Page](Images/KibanaLogsStatus.jpg)
 
-Explanation or additional information about the registration page.
+мы можем видеть статус индекса twit_logs, размер хранилища и количество документов
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы grafan
 ![Registration Page](Images/Grafana1.jpg)
 
-Explanation or additional information about the registration page.
+на этом скриншоте мы видим, что есть страница, которую необходимо заполнить данными elasticsearch, 
+такими как название индекса, URL-адрес elasticsearch.
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы grafan
 ![Registration Page](Images/grafana2.jpg)
 
-Explanation or additional information about the registration page.
+здесь мы ввели название нашего индекса - twit_logs
 
 
-
-### 2. Screen shot of the registration page
+### 2. Скриншот страницы grafan
 ![Registration Page](Images/grafana3.jpg)
 
-Explanation or additional information about the registration page.
+Здесь мы должны нажать кнопку Сохранить и протестировать.
 
 
 
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот панели мониторинга grafana
 ![Registration Page](Images/GrafanaLogs.jpg)
 
-Explanation or additional information about the registration page.
+Скриншот панели мониторинга grafana с журналами, полученными из elasticsearch.
 
 
 
 
-### 2. Screen shot of the registration page
+### 2. Скриншот панели мониторинга grafana
 ![Registration Page](Images/GrafanaLogs2.jpg)
 
-Explanation or additional information about the registration page.
-
-
+Скриншот панели мониторинга grafana с журналами, полученными из elasticsearch.
 
 </details>
 
