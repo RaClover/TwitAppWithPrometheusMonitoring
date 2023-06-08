@@ -17,6 +17,9 @@ and he can answer (replay) for that comment .
 - [Contributing](#contributing)
 - [License](#license)
 
+
+<details>
+<summary> </summary>
 ## I have used 
 
 - Docker
@@ -251,8 +254,10 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 }
 ```
 
+</details>
+
 <details>
-  <summary>Click to expand/collapse</summary>
+  <summary>ENd</summary>
 
 This is the content of the collapsible section.
 
