@@ -34,7 +34,8 @@ and he can answer (replay) for that comment .
 </details>
 
 
-## Steps that I have made for this project
+<details>
+ <summary><h2>Steps that I have made for this project</h2></summary>
 
 
 
@@ -257,6 +258,11 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 }
 ```
 
+
+
+
+
+<details>
 
 <details>
   <summary>ENd</summary>
