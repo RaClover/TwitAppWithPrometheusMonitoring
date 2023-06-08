@@ -39,13 +39,9 @@ and he can answer (replay) for that comment .
 
 
 
+
+
 1. Make the docker-compose file with the images (app, mysql, elasticsearch , kibana , grafana):
-
-```bash
-git clone https://github.com/yourusername/yourlaravelproject.git
-```
-
-2. Clone the repository:
 
 ```bash
 version: '3.8'
@@ -108,7 +104,7 @@ volumes:
 
 ```
 
-3. Создать Dockerfile:
+2. Создать Dockerfile:
 
 FROM php:8.2.0-fpm: Определяет базовый образ с PHP версии 8.2.0 и модулем FPM.
 
@@ -150,8 +146,8 @@ RUN composer install
 CMD php artisan serve --host=0.0.0.0 --port=8000
 
 ```
-4. Install docker / docker desktop
-5. Configure the .env file : 
+3. Install docker / docker desktop
+4. Configure the .env file : 
 
 Elasticsearch:
 
@@ -184,13 +180,13 @@ DB_DATABASE=chirper
 DB_USERNAME=root
 DB_PASSWORD=mysecretpassword
 ```
-6. Install the elasticsearch using composer : 
+5. Install the elasticsearch using composer : 
 
 ```bash
 composer require elasticsearch/elasticsearch
 ```
 
-7. Configure the channels in config/logging.php :
+6. Configure the channels in config/logging.php :
 
 ```bash
   'channels' => [
@@ -219,7 +215,7 @@ composer require elasticsearch/elasticsearch
     ],
 ```
 
-8. Make App\Logging\ElasticsearchLogger class with this content :
+7. Make App\Logging\ElasticsearchLogger class with this content :
 
 ```bash
 class ElasticsearchLogger extends AbstractProcessingHandler
@@ -262,7 +258,7 @@ class ElasticsearchLogger extends AbstractProcessingHandler
 
 
 
-<details>
+</details>
 
 <details>
   <summary>ENd</summary>
