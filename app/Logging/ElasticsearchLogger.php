@@ -41,10 +41,4 @@ class ElasticsearchLogger extends AbstractProcessingHandler
             ]);
         }
     }
-
-
-    public static  function do()
-    {
-
-    }
 }
