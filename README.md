@@ -353,5 +353,34 @@ services:
             - mysql
 
 ```
+
+
+
 # Полученные результаты
+
+
+###  Docker
+![Login Page](public/Imgs/spa1.jpg)
+
+
+###  metrics в приложении localhost:8000/metrics
+![Login Page](public/Imgs/spa1.jpg)
+
+### metrics в prometheus localhost:9090
+![registration](public/Ima)
+
+### alertmanager
+![CRUD USERS](public/Imgs/spa4.jpg)
+
+### 4. metrics в Node Exporter
+![CRUD ROLES](public/Imgs/spa5.jpg)
+
+### 4. metrics в Blackbox Exporter
+![CRUD ROLES](public/Imgs/spa5.jpg)
+
+### 4. metrics в Mysql Exporter
+![CRUD ROLES](public/Imgs/spa5.jpg)
+
+### 4. Grafana
+![CRUD ROLES](public/Imgs/spa5.jpg)
 
