@@ -117,9 +117,7 @@ function Index({ auth, twits }) {
                                     </button>
                                 </div>
                             ) : (
-                                <p className="text-center">
-                                    You've reached the end!!
-                                </p>
+                                <p className="text-center"></p>
                             )}
                         </div>
                     </div>

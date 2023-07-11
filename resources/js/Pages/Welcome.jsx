@@ -16,62 +16,15 @@ export default function Welcome(props) {
                         <div className="w-full sm:w-1/2">
                             <div className="max-w-3xl">
                                 <h1 className="font-alt-40 text-solar-700 mb-4 text-xl uppercase tracking-wider lg:text-2xl">
-                                  
+
                                 </h1>
                                 <h2 className="lg:text-66xl md:tracking-tightish leading-extra-tight mb-6 font-serif text-5xl md:mb-8 md:text-6xl">
                                     Twit-teer
                                 </h2>
                                 <p className="text-charcoal-500 mb-8 text-lg md:mb-10 lg:mb-12 lg:text-xl xl:text-2xl">
-                                    Connect with everyone and interact with
-                                    everybody. It's free for life and after that
-                                    you pay $1000/mo
+                                    Login to your account or create an account if you don't have yet.
+                                    And enjoy Tweeting
                                 </p>
-                                <p className="text-2xl">Recent Twits</p>
-                                <div className="max-w-6xl mx-auto sm:px-6 lg:px-2">
-                                    {props.twits.slice(0, 2).map((twit) => (
-                                        <div
-                                            className="mt-6 bg-white overflow-hidden shadow sm:rounded-lg"
-                                            key={twit.id}
-                                        >
-                                            <div className="add something">
-                                                <div className="p-6 border-t border-gray-200">
-                                                    <div className="flex items-center">
-                                                        <img
-                                                            className="w-9 h-9 rounded-full"
-                                                            src={`/uploads/avatar/${twit.user.avatar}`}
-                                                            alt={twit.user.name}
-                                                        />
-                                                        <div className="ml-4 text-lg leading-7 font-semibold">
-                                                            {twit.user.name}
-                                                            <small className="ml-2 text-sm text-blue-500">
-                                                                {dayjs(
-                                                                    twit.created_at
-                                                                ).fromNow()}
-                                                            </small>
-                                                            {twit.created_at !==
-                                                                twit.updated_at && (
-                                                                <small className="text-sm purple-500">
-                                                                    {" "}
-                                                                    &middot;
-                                                                    edited
-                                                                </small>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                    <div className="ml-12">
-                                                        <div className="mt-2 text-gray-800 text-sm">
-                                                            {twit.message}
-                                                            <p className="text-blue-400 mt-1">
-                                                                {twit.images && twit.images.length > 0 &&
-                                                                    ("Sign to view images")}
-                                                            </p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
                                 <div className="mt-8 md:mt-12">
                                     <a
                                         href="#"
