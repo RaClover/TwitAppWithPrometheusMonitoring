@@ -140,13 +140,4 @@ class MetricsController extends Controller
 
     }
 
-
-//    private function getExceptionRate()
-//    {
-//        $errorCount = app(CollectorRegistry::class)
-//            ->getOrRegisterCounter('app', 'error_count', 'Total number of errors');
-//        $interval = 60; // Time interval in seconds (e.g., 60 seconds)
-//        return $errorCount->get() / $interval;
-//    }
-
 }
