@@ -15,4 +15,4 @@ route:
 receivers:
   - name: 'telegram-webhook'
     webhook_configs:
-      - url: 'https://api.telegram.org/bot6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU/sendMessage?chat_id=1063527602&text=High+CPU+usage+detected+in+the+app!+Current+value:+{{ $value }}'
+      - url: 'telegram_bot_url?chat_id=telegram_bot_chat_id=High+CPU+usage+detected+in+the+app!+Current+value:+{{ $value }}'
