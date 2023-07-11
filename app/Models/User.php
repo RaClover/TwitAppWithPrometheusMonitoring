@@ -46,11 +46,17 @@ class User extends Authenticatable
     ];
 
 
+    public function isOnline()
+    {
+        return $this->last_activity > now()->subMinutes(5);
+    }
+
+
     // defining a relationship betwen user and twit..
     public function twits() {
         return $this->hasMany(Twit::class);
     }
-    
+
     // defining a relationship betwen user and comment..
     public function comments() {
         return $this->hasMany(Comment::class);
@@ -61,5 +67,5 @@ class User extends Authenticatable
         return $this->hasMany(Like::class);
     }
 
-   
+
 }

@@ -14,8 +14,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rules;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Controllers\LogsController;
-use App\Logging\ElasticsearchLogger;
+
 
 class RegisteredUserController extends Controller
 {
@@ -44,12 +43,12 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'last_activity' => now()
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
-        LogsController::sendLogs('New user has registered' , 'info' , $request->name , $request->email);
 
         return redirect(RouteServiceProvider::HOME);
     }

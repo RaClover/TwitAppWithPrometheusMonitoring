@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Comment extends Model
 {
-    use HasFactory;
+    use HasFactory , SoftDeletes;
+
     //specifying the table
     protected $table = 'comments';
 
@@ -19,12 +21,12 @@ class Comment extends Model
         'like_dislike',
 
     ];
-    
+
     //making this into booleaon ( 1 or 0)
     protected $casts = [
         'like_dislike' => 'boolean'
     ];
-    
+
     //defining a relationship between comment and user:: user hasMany comments:: Check User Modal
     public function user(){
         return $this->belongsTo(User::class);

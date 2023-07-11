@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\LogsController;
+use App\Events\TwitCreated;
 use App\Models\Twit;
 use App\Models\Comment;
 use DateTime;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\File; //delete file
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Log;
 use Elasticsearch\Client;
+use Illuminate\Support\Facades\Event;
 
 
 class TwitController extends Controller
@@ -29,18 +31,11 @@ class TwitController extends Controller
      */
     public function index()
     {
-
-
-
-
-
-        //return Inertia::render('Twits/Twits',['answer'=> $nub, 'mydate'=> $mydate]);
-
         return Inertia::render('Twits/Index', [
             //we fetch the twits ordering by the latest
 
             //fetch twits, users and related comments, get by latest
-            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar','comments.replies','comments.replies.user','likes'])->latest()->get(),
+            'twits' => Twit::with(['user:id,name,avatar', 'comments:id,comment_body,like_dislike,created_at,user_id,twit_id,parent_id', 'comments.user:id,name,avatar','comments.replies','comments.replies.user','likes'])->orderBy('id', 'desc')->get(),
             'replies'=>Comment::whereNotNull('parent_id')->with(['user:id,name,avatar'])->latest()->get(),
             //RETURNS COMMENTS
             'comments'=>Comment::whereNull('parent_id')->with(['user:id,name,avatar'])->latest()->get()
@@ -56,73 +51,59 @@ class TwitController extends Controller
      */
     public function welcome()
     {
-
-        // Log an info message
-//        Log::error('this is a log', ['test context']);
-//        Log::info('Guest user rendered page');
         //guest rendered page, show twits
         return Inertia::render('Welcome', [
             'canLogin' => Route::has('login'),
             'canRegister' => Route::has('register'),
-            'twits' => Twit::with('user:id,name,avatar')->latest()->limit(3)->get(),
+            'twits' => Twit::with('user:id,name,avatar')->orderBy('id', 'desc')->limit(3)->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
+
     public function store(Request $request)
     {
-        // TODO: learn more about laravel validation
-
         $validated = $request->validate([
             'message' => 'required|string|max:255',
-            'images' => 'array | max:3'
+            'images' => 'array|max:3',
         ]);
         $images = [];
         $message = '';
 
-        //if images are present, we loop through them and save them to the public folder
         if ($request->hasFile('images')) {
             foreach ($validated['images'] as $image) {
                 $imageName = uniqid() . '.' . $image->getClientOriginalExtension();
-                $path = public_path('uploads/images/'.$imageName);
-                Image::make($image->getRealPath())->resize(800,null, function($constraint){
+                $path = public_path('uploads/images/' . $imageName);
+                Image::make($image->getRealPath())->resize(800, null, function ($constraint) {
                     $constraint->aspectRatio();
                 })->save($path);
-                // $image->move(public_path('/uploads/images'), $imageName);
                 array_push($images, $imageName);
             }
             $message = $validated['message'];
 
-            $request->user()->twits()->create([
+            $twit = $request->user()->twits()->create([
                 'message' => $message,
-                'images' => $images
+                'images' => $images,
             ]);
-            // Log an info message
 
-            LogsController::sendLogs("Twit has been added" , 'info', auth()->user()->name , auth()->user()->email);
-
+            // Dispatch the TwitCreated event
+            event(new TwitCreated($twit));
         } else {
-            $request->user()->twits()->create([
+            $twit = $request->user()->twits()->create([
                 'message' => $validated['message'],
             ]);
-        }
-        LogsController::sendLogs("Twit has been added" , 'info', auth()->user()->name , auth()->user()->email);
 
-        //then redirect
+            // Dispatch the TwitCreated event
+            Event::dispatch(new TwitCreated($twit));
+        }
+
         return redirect(route('twits.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Twit  $twit
-     * @return \Illuminate\Http\Response
+     * @param Twit $twit
+     * @return Response
      */
     public function show(Twit $twit)
     {
@@ -132,38 +113,34 @@ class TwitController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Twit  $twit
-     * @return \Illuminate\Http\Response
+     * @param Twit $twit
+     * @return Response
      */
 
 
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param \App\Models\Twit $twit
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param Twit $twit
+     * @return Response
      * @throws \Exception
      */
     public function update(Request $request, Twit $twit)
     {
         $this->authorize('update', $twit);
-        //TODO: delete image if twit is updated
 
         $img = $request->images;
         //remove only images patched in the $request object
         $removedImage = $request->json;
         if (!is_array($img)) {
-            //get images in request changes object
-            foreach ($img as $image) {
-                if (isset($twit->images)) {
+            if (!empty($twit->images)) {
+                foreach ($img as $image) {
                     if (in_array($image, $twit->images)) {
                         unlink(public_path('/uploads/images/') . $image);
-                        }
+                    }
                 }
-
             }
-
         }
 
         //validate
@@ -173,18 +150,14 @@ class TwitController extends Controller
         ]);
 
         $twit->update($validated);
-        // Log a debug message
-        LogsController::sendLogs("Twit" .$twit->id. " has been updated by" . auth()->user()->name , 'info', auth()->user()->name , auth()->user()->email);
-
-
         return redirect(route('twits.index'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Twit  $twit
-     * @return \Illuminate\Http\Response
+     * @param Twit $twit
+     * @return Response
      */
     public function destroy(Twit $twit)
     {
@@ -207,10 +180,6 @@ class TwitController extends Controller
         $twit->delete();
         //remove comments
         $twit->comments()->delete();
-
-        // Log a notice message
-        LogsController::sendLogs("Twit" .$twit->id. " has been deleted by" . auth()->user()->name , 'info', auth()->user()->name , auth()->user()->email);
-
         //redirect
         return redirect(route('twits.index'));
     }

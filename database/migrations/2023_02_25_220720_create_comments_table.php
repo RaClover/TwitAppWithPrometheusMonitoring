@@ -21,6 +21,8 @@ return new class extends Migration
             $table->boolean('like_dislike')->nullable();
             $table->integer('parent_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

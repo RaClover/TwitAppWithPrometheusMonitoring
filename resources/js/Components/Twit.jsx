@@ -21,7 +21,7 @@ function Twit({ twit }) {
     const [currentImage, setCurrentImage] = useState([]);
     const [isViewerOpen, setIsViewerOpen] = useState(false);
 
-   
+
     //comments state
     const [showModal, setShowModal] = useState(false);
 
@@ -53,7 +53,7 @@ function Twit({ twit }) {
         );
     };
 
-    
+
     //submit
     const submit = (e) => {
         e.preventDefault();

@@ -57,23 +57,6 @@ return [
             'channels' => ['single', 'elasticsearch'],
             'ignore_exceptions' => false,
         ],
-        'elasticsearch' => [
-            'driver' => 'custom',
-            'via' => App\Logging\ElasticsearchLogger::class,
-            'client' => Elasticsearch\ClientBuilder::fromConfig([
-                'hosts' => [
-                    [
-                        'host' => env('ELASTICSEARCH_HOST', 'localhost'),
-                        'port' => env('ELASTICSEARCH_PORT', 9200),
-                        'scheme' => env('ELASTICSEARCH_SCHEME', 'http'),
-                        'user' => env('ELASTICSEARCH_USER', null),
-                        'pass' => env('ELASTICSEARCH_PASS', null),
-                    ],
-                ],
-            ]),
-            'index' => 'twit_logs', // Customize the index name as per your preference
-            'level' => 'info',
-        ],
     ],
 
 

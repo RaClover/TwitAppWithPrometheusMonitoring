@@ -1,13 +1,25 @@
 <?php
 
+use App\Http\Controllers\MetricsController;
+use App\Http\Controllers\ProbeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TwitController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
+use App\Http\Middleware\CountRequestsMiddleware;
+use App\Models\Comment;
+use App\Models\Like;
+use App\Models\Twit;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\LogsController;
+use Prometheus\CollectorRegistry;
+use Prometheus\RenderTextFormat;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Cache;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,7 +33,12 @@ use App\Http\Controllers\LogsController;
 */
 
 Route::get('/', [TwitController::class,'welcome']); //public for guest page
-Route::get('/logs', [LogsController::class,'retrieveLogs']); // for logs
+
+Route::middleware([CountRequestsMiddleware::class])->group(function () {
+    Route::get('/metrics',[MetricsController::class, 'getMetrics']);
+});
+
+
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');

@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('twit_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

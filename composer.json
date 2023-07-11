@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "arquivei/laravel-prometheus-exporter": "^3.0",
         "doctrine/dbal": "^3.5",
         "elasticsearch/elasticsearch": "^7.17",
         "guzzlehttp/guzzle": "^7.2",
@@ -14,6 +15,7 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.7",
+        "promphp/prometheus_client_php": "^2.7",
         "tightenco/ziggy": "^1.0"
     },
     "require-dev": {
@@ -67,6 +69,13 @@
             "php-http/discovery": true
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/arquivei/laravel-prometheus-exporter"
+        }
+    ],
+
     "minimum-stability": "dev",
     "prefer-stable": true
 }

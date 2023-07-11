@@ -11,7 +11,7 @@ import { comment } from "postcss";
 
 export default function Modal({ showModal, setShowModal, twit }) {
     dayjs.extend(relativeTime);
-    //replies 
+    //replies
     const [reply, setReply] = useState(false)
     const [replyId, setReplyId] = useState()
     const [showReplies,setShowReplies] = useState(false)
@@ -49,7 +49,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
             "parent_id",
             commentId
         )
-       
+
     }
 
     const { auth, comments } = usePage().props;
@@ -92,12 +92,12 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                     {twit.comments
                                         .slice(currentPage, commentsPerPage)
                                         .map((comment) => (
-                                           
+
                                             <div
                                                 key={comment.id}
                                                 className=" sm:items-start mb-2"
                                             //ml-8 bg-gray-100 text-sm for commentsReplies
-                                            > 
+                                            >
                                                 <article className={`border-t border-gray-200 p-6  rounded-md ${comment.parent_id !=null ? 'hidden':'bg-gray-50 text-base'}` }>
                                                     <footer className="mb-2 flex items-center justify-between">
                                                         <div className="flex items-center">
@@ -113,7 +113,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                                 }
                                                             </p>
                                                             <p className="text-sm text-gray-600">
-                                                               
+
                                                                 {dayjs(
                                                                     comment.created_at
                                                                 ).fromNow()}
@@ -122,7 +122,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
 
                                                         {comment.user_id ==
                                                         auth.user.id ? (
-                                                            //only one who posted can delete 
+                                                            //only one who posted can delete
                                                             <div className="flex justify-end">
                                                                 <Dropdown>
                                                                     <Dropdown.Trigger>
@@ -180,11 +180,11 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                                         <button
                                                                             className="block w-full px-4 py-2 text-left text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:bg-gray-100 transition duration-150 ease-in-out"
                                                                             onClick={()=>replyToComments(comment.id)}
-                                                                
+
                                                                         >
                                                                             Reply
                                                                         </button>
-                                                                
+
                                                                     </Dropdown.Content>
                                                                 </Dropdown>
                                                             </div>
@@ -270,7 +270,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                         ))}
                                     {/* by default submit comment else reply form */}
                                     {reply ? (
-                                      
+
                                         <div className=" sm:items-start">
                                         <form onSubmit={submitComment}>
                                             <div className="flex items-center px-3 py-2 rounded-lg bg-gray-50">
@@ -285,7 +285,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                     rows="2"
                                                     className="block mx-4 p-2.5 w-full text-sm text-gray-900 bg-gray-40 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                                                     placeholder={`Type your reply..`}
-                                                      
+
                                                     value={ data.comment_body }
                                                     onChange={(e) =>
                                                         setData(
@@ -347,7 +347,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                      src={`/uploads/avatar/${auth.user.avatar}`}
                                                      alt={auth.user.name}
                                                  />
- 
+
                                                  <textarea
                                                      id="chat"
                                                      rows="1"
@@ -383,7 +383,7 @@ export default function Modal({ showModal, setShowModal, twit }) {
                                                          )
                                                      }
                                                  /> */}
- 
+
                                                  <button
                                                      type="submit"
                                                      className="inline-flex justify-center p-2 text-green-600 rounded-full cursor-pointer bg-green-100 hover:bg-green-400 hover:text-white"

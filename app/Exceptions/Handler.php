@@ -3,10 +3,17 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Throwable;
+use Prometheus\CollectorRegistry;
+
 
 class Handler extends ExceptionHandler
 {
+
+
+
+
     /**
      * A list of exception types with their corresponding custom log levels.
      *
@@ -46,5 +53,27 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+
+
+    public function report(Throwable $e)
+    {
+//        if ($this->shouldReport($e)) {
+//            $exceptionClass = get_class($e);
+//            $errorCounter = app(CollectorRegistry::class)->getOrRegisterCounter(
+//                'app',
+//                'error_count',
+//                'Total number of errors',
+//                ['exception']
+//            );
+//
+//            try {
+//                $errorCounter->incBy(1, ['exception' => $exceptionClass]);
+//            } catch (Throwable $exception) {
+//                report($exception);
+//            }
+//        }
+//
+//        parent::report($e);
     }
 }
