@@ -1,0 +1,23 @@
+modules:
+  http_laravel_app:
+    prober: http
+    timeout: 5s
+    http:
+      method: GET
+      valid_http_versions: ["HTTP/1.1", "HTTP/2"]
+      valid_http_statuses: [200, 201, 302]
+      fail_if_matches_regexp: []
+      fail_if_not_matches_regexp: []
+      headers:
+        Host: localhost:8000
+
+  tcp_laravel_app:
+    prober: tcp
+    timeout: 5s
+    tcp:
+      query_response:
+        - expect: "220 *"
+          send: "HELO world\r\n"
+        - send: "QUIT\r\n"
+        - expect: "221 *"
+          send: "HELO world\r\n"

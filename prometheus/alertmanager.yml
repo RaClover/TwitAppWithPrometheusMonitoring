@@ -1,0 +1,18 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'cluster', 'service']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h
+  receiver: 'telegram-webhook'
+  routes:
+    - match:
+        severity: critical
+      receiver: telegram-webhook
+
+receivers:
+  - name: 'telegram-webhook'
+    webhook_configs:
+      - url: 'https://api.telegram.org/bot6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU/sendMessage?chat_id=1063527602&text=High+CPU+usage+detected+in+the+app!+Current+value:+{{ $value }}'
