@@ -1,17 +1,10 @@
-# Twit Web app
-
-![Laravel Logo](https://laravel.com/img/logomark.min.svg)
+# Twit Web application
 
 Веб-приложение Twit - это клон социальных сетей, приложение crud, в котором пользователи создают учетные записи и публикуют, редактируют посты, добавляют изображения к постам и комментарии.
 Пользователь может зарегистрироваться на веб-сайте, и он увидит все сообщения от других пользователей, и он может сделать Post (Twit).
 он может просмотреть свой пост, отредактировать его или удалить. а также он может прокомментировать любой Post.Пользователь также может видеть комментарии к своему посту, которые пришли от других пользователей,
 и он может ответить на этот комментарий. 
 
-# Install and run tests
-+ Clone this repository
-```shell
-git clone --recursive https://github.com/trufflesuite/the-bet.git
-```
 
 <details>
  <summary><h2>Содержимое для использования</h2></summary>
@@ -28,6 +21,18 @@ git clone --recursive https://github.com/trufflesuite/the-bet.git
 
 </details>
 
+# использование
+1. Php 8
+2. Laravel 10
+3. ReactJs
+4. Mysql
+5. Docker & docker compose
+6. Prometheus Custom metrics
+7. Prometheus Alertmanager
+8. Node exporter
+9. Blackbox exporte
+10. Mysql exporter
+11. Nginx
 
 <details>
  <summary><h2>Шаги, которые я сделал для этого проекта</h2></summary>
