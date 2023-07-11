@@ -294,6 +294,7 @@ services:
 ```
 <h3>Шаг 6</h3>
 создайте route /metrica в приложении для Prometheus Endpoint 
+
 ```bash
 version: '3.8'
 
@@ -313,9 +314,8 @@ services:
 ```
 <h3>Шаг 7</h3>
 Создайте Middleware  для считать запроса (Request metrics )
-```
-<h3>Шаг 3</h3>
-создайте route /metrica в приложении для Prometheus Endpoint 
+
+
 ```bash
 version: '3.8'
 
@@ -335,6 +335,8 @@ services:
 ```
 <h3>Шаг 8</h3>
 Создайте контроллер для всех metrics
+
+```bash
 version: '3.8'
 
 services:
