@@ -31,8 +31,6 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          node-version: '16'
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
