@@ -68,8 +68,6 @@ jobs:
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "This is your scheduled daily notification."
 
-      # Additional steps for security vulnerability notifications (using third-party tools)
-
       - name: Send Push Notification
         uses: appleboy/telegram-action@v0.1.1
         if: ${{ github.event_name == 'push' }}
