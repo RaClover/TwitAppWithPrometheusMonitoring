@@ -1,0 +1,77 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types:
+      - opened
+      - synchronize
+  deployment_status:
+    types:
+      - success
+  schedule:
+    - cron: '0 9 * * *' # Runs every day at 9:00 AM UTC
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: rootpassword
+          MYSQL_DATABASE: Twit
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Install Composer
+        run: composer install
+
+      - name: Build Docker image
+        run: docker build -t twit_actions
+
+      - name: Send Pull Request Status Notification
+        uses: appleboy/telegram-action@v0.0.2
+        with:
+          to: ${{ 1063527602 }}
+          token: ${{ 6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
+
+      - name: Send Deployment Status Notification
+        uses: appleboy/telegram-action@v0.0.2
+        if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
+        with:
+          to: ${{ 1063527602 }}
+          token: ${{ 6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          message: "Deployment to production was successful!"
+
+      - name: Send Scheduled Notification
+        uses: appleboy/telegram-action@v0.0.2
+        if: ${{ github.event_name == 'schedule' }}
+        with:
+          to: ${{ 1063527602 }}
+          token: ${{ 195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          message: "This is your scheduled daily notification."
+
+      # Additional steps for security vulnerability notifications (using third-party tools)
+
+      - name: Send Push Notification
+        uses: appleboy/telegram-action@v0.0.2
+        if: ${{ github.event_name == 'push' }}
+        with:
+          to: ${{ 1063527602 }}
+          token: ${{ 195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          message: "New commits pushed to main branch."
