@@ -46,24 +46,24 @@ jobs:
       - name: Send Pull Request Status Notification
         uses: appleboy/telegram-action@v0.0.2
         with:
-          to: ${{ 1063527602 }}
-          token: ${{ 6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
 
       - name: Send Deployment Status Notification
         uses: appleboy/telegram-action@v0.0.2
         if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
         with:
-          to: ${{ 1063527602 }}
-          token: ${{ 6195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "Deployment to production was successful!"
 
       - name: Send Scheduled Notification
         uses: appleboy/telegram-action@v0.0.2
         if: ${{ github.event_name == 'schedule' }}
         with:
-          to: ${{ 1063527602 }}
-          token: ${{ 195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "This is your scheduled daily notification."
 
       # Additional steps for security vulnerability notifications (using third-party tools)
@@ -72,6 +72,6 @@ jobs:
         uses: appleboy/telegram-action@v0.0.2
         if: ${{ github.event_name == 'push' }}
         with:
-          to: ${{ 1063527602 }}
-          token: ${{ 195353294:AAHJZ7ftn6yfcBrSRO3nrKo1S9EoTkmGLCU }}
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "New commits pushed to main branch."
