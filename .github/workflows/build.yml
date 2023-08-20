@@ -33,7 +33,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@master
+        uses: actions/checkout@main
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
