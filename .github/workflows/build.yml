@@ -46,12 +46,12 @@ jobs:
       - name: Build Docker image
         run: docker build -t twit_actions .
 
-      - name: Send Pull Request Status Notification
-        uses: appleboy/telegram-action@v0.1.1
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
+#      - name: Send Pull Request Status Notification
+#        uses: appleboy/telegram-action@v0.1.1
+#        with:
+#          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+#          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+#          message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
 
 
       - name: Send Deployment Status Notification
