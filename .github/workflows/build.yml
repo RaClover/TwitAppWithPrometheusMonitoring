@@ -55,6 +55,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
 
+
       - name: Send Deployment Status Notification
         uses: appleboy/telegram-action@v0.1.1
         if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
