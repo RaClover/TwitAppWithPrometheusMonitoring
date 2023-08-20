@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@2.307.1
+        uses: actions/checkout@v2
 
       - name: Set up PHP
-        uses: shivammathur/setup-php@2
+        uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
@@ -41,7 +41,7 @@ jobs:
         run: composer install
 
       - name: Build Docker image
-        run: docker build -t twit_actions
+        run: docker build -t twit_actions .
 
       - name: Send Pull Request Status Notification
         uses: appleboy/telegram-action
@@ -51,7 +51,7 @@ jobs:
           message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
 
       - name: Send Deployment Status Notification
-        uses: appleboy/telegram-action@2.307.1
+        uses: appleboy/telegram-action
         if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -59,7 +59,7 @@ jobs:
           message: "Deployment to production was successful!"
 
       - name: Send Scheduled Notification
-        uses: appleboy/telegram-action@2.307.1
+        uses: appleboy/telegram-action
         if: ${{ github.event_name == 'schedule' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -69,7 +69,7 @@ jobs:
       # Additional steps for security vulnerability notifications (using third-party tools)
 
       - name: Send Push Notification
-        uses: appleboy/telegram-action@2.307.1
+        uses: appleboy/telegram-action
         if: ${{ github.event_name == 'push' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
