@@ -30,7 +30,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@2.307.1
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
