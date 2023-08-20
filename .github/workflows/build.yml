@@ -44,14 +44,14 @@ jobs:
         run: docker build -t twit_actions .
 
       - name: Send Pull Request Status Notification
-        uses: appleboy/telegram-action@v2
+        uses: appleboy/telegram-action@v0.1.1
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           message: "New pull request: ${{ github.event.pull_request.title }}. Status: ${{ github.event.pull_request.state }}"
 
       - name: Send Deployment Status Notification
-        uses: appleboy/telegram-action@v2
+        uses: appleboy/telegram-action@v0.1.1
         if: ${{ github.event_name == 'deployment_status' && github.event.deployment_status.state == 'success' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -59,7 +59,7 @@ jobs:
           message: "Deployment to production was successful!"
 
       - name: Send Scheduled Notification
-        uses: appleboy/telegram-action@v2
+        uses: appleboy/telegram-action@v0.1.1
         if: ${{ github.event_name == 'schedule' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -69,7 +69,7 @@ jobs:
       # Additional steps for security vulnerability notifications (using third-party tools)
 
       - name: Send Push Notification
-        uses: appleboy/telegram-action@v2
+        uses: appleboy/telegram-action@v0.1.1
         if: ${{ github.event_name == 'push' }}
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
