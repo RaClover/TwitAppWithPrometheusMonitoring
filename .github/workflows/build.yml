@@ -13,14 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
+      - name: Build and deploy with Docker
         run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          docker-compose --version
-
-      - name: Build and deploy with Docker Compose
-        run: docker-compose up -d --build
+          docker run --rm --privileged -v /var/run/docker.sock:/var/run/docker.sock docker:20.10 sh -c "docker-compose up -d --build"
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@v0.1.1
