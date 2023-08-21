@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -13,17 +13,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Set up Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-ce docker-ce-cli containerd.io
-          docker-compose --version
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-      - name: Build and deploy with Docker
-        run: |
-          mkdir -p ~/.docker
-          echo '{"auths":{},"HttpHeaders":{"User-Agent":"Docker-Client/20.10.7 (linux)"}}' > ~/.docker/config.json
-          docker-compose up -d --build
+      - name: Install Composer dependencies
+        run: composer install
+
+      - name: Install Node.js dependencies and build assets
+        run: npm install && npm run production
+
+      - name: Set up Docker Compose
+        run: sudo apt-get update && sudo apt-get install -y docker-compose
+
+      - name: Build and deploy with Docker Compose
+        run: docker-compose -f docker-compose.yml up -d --build
 
       - name: Send Telegram notification
         uses: appleboy/telegram-action@v0.1.1
