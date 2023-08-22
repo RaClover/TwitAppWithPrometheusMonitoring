@@ -7,6 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
+
+      - name: send photo message
+        uses: ./
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: 'New push in branch ${{ github.ref }}!'
+          photo: './tests/smiling-face.svg'
+
+
       - name: send custom message with args
         uses: ./
         with:
@@ -16,14 +26,7 @@ jobs:
             New push on branch: ${{ github.ref }}
             Commit Message: ${{ github.event.head_commit.message }}
 
-      - name: send photo message
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: send photo message
-          photo: './tests/github.png'
-          document: './tests/gophercolor.png'
+
 
       - name: send debug message
         uses: ./
