@@ -14,7 +14,7 @@ jobs:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: 'New push in branch ${{ github.ref }}!'
-          photo: './tests/smiling-face.svg'
+          photo: './tests/true.png'
 
 
       - name: send custom message with args
