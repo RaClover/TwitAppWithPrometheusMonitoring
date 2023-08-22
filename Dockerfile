@@ -1,4 +1,5 @@
-FROM php:8.2.0-fpm
+# Stage 1: Build Application
+FROM php:8.2.0-fpm as app
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -35,3 +36,13 @@ RUN composer install
 
 # Install Node.js dependencies and build assets
 RUN npm install
+
+# Stage 2: Add Telegram Notification
+FROM appleboy/drone-telegram:1.3.9-linux-amd64
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+WORKDIR /github/workspace
+
+ENTRYPOINT ["/entrypoint.sh"]
