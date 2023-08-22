@@ -12,27 +12,9 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: The ${{ github.event_name }} event triggered first step.
-
-
-      - name: send message using with
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            The ${{ github.event_name }} event triggered second step.
-            show the github variable ref: ${{ github.ref }}
-            show the github variable commit: ${{ github.sha }}
-            show the github variable ref: {{ commit.ref }}
-            show the github variable commit: {{ commit.sha }}
+          args: |
+            New push on branch: ${{ github.ref }}
             Commit Message: ${{ github.event.head_commit.message }}
-
-      - name: send default message
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
 
       - name: send photo message
         uses: ./
@@ -43,52 +25,12 @@ jobs:
           photo: './tests/github.png'
           document: './tests/gophercolor.png'
 
-      - name: send location message
+      - name: send debug message
         uses: ./
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          location: '24.9163213 121.1424972'
-          venue: '35.661777 139.704051 竹北體育館 新竹縣竹北市'
+          debug: true
+          message: Debugging message.
 
-      - name: send custom message
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            The ${{ github.event_name }} event triggered final step.
-            echo This event is a pull request that had an assignee removed.
 
-      - name: send message file
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message_file: tests/message.txt
-
-      - name: link preview
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: |
-            show link preview https://google.com.tw
-
-      - name: disable link preview
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          disable_web_page_preview: true
-          message: |
-            disable link preview https://google.com.tw
-
-      - name: sending a message without notification
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          disable_notification: true
-          message: |
-            disable link preview https://google.com.tw
