@@ -1,4 +1,4 @@
-name: telegram message
+name: CI/CD Pipeline& telegram notifications
 on: [push]
 jobs:
 
@@ -13,7 +13,6 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: 'New push in branch ${{ github.ref }}!'
           photo: './tests/true.png'
 
 
@@ -37,3 +36,52 @@ jobs:
           message: Debugging message.
 
 
+      # Linting and Code Analysis
+      - name: Run Linting
+        run: vendor/bin/phpcs
+        continue-on-error: true  # Continue even if linting fails
+
+      # Container Security Scanning
+      - name: Install Trivy
+        run: |
+          wget https://github.com/aquasecurity/trivy/releases/download/v0.21.0/trivy_0.21.0_Linux-64bit.tar.gz
+          tar zxvf trivy_0.21.0_Linux-64bit.tar.gz
+          sudo mv trivy /usr/local/bin/
+
+      - name: Scan Container Image
+        run: trivy image twit:latest
+
+      # Monitoring and Alerts
+      - name: Send Alerting Rules to Prometheus
+        run: |
+          cp prometheus/alert_rules.yml ./prometheus/alert_rules.yml
+
+      - name: Build and Deploy
+        run: |
+          docker-compose build
+          docker-compose up -d
+
+      - name: Send Alerting Rules to Grafana
+        run: |
+          cp prometheus/alert_rules.yml ./grafana/alert_rules.yml
+          # Update alert rule datasource to match your Grafana datasource
+          sed -i 's/${DS_PROMETHEUS}/your-prometheus-datasource/g' ./grafana/alert_rules.yml
+
+
+
+      # Sending success or failure notifications to Telegram
+      - name: Send Notification on Success
+        if: success()
+        uses: ./
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: 'Pipeline completed successfully!'
+
+      - name: Send Notification on Failure
+        if: failure()
+        uses: ./
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: 'Pipeline failed!'
