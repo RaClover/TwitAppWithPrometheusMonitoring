@@ -3,7 +3,7 @@ on: [push]
 jobs:
 
   build:
-    name: Build
+    name: Build Push Docker Image
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -35,6 +35,14 @@ jobs:
           debug: true
           message: Debugging message.
 
+      - name: Build and Push Docker Image
+        run: |
+          docker-compose build
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker-compose push
+        env:
+          DOCKER_BUILDKIT: 1
+
 
       # Linting and Code Analysis
       - name: Run Linting
@@ -49,23 +57,7 @@ jobs:
           sudo mv trivy /usr/local/bin/
 
       - name: Scan Container Image
-        run: trivy image twit:latest
-
-      # Monitoring and Alerts
-      - name: Send Alerting Rules to Prometheus
-        run: |
-          cp prometheus/alert_rules.yml ./prometheus/alert_rules.yml
-
-      - name: Build and Deploy
-        run: |
-          docker-compose build
-          docker-compose up -d
-
-      - name: Send Alerting Rules to Grafana
-        run: |
-          cp prometheus/alert_rules.yml ./grafana/alert_rules.yml
-          # Update alert rule datasource to match your Grafana datasource
-          sed -i 's/${DS_PROMETHEUS}/your-prometheus-datasource/g' ./grafana/alert_rules.yml
+        run: trivy image ${{ secrets.DOCKERHUB_USERNAME }}/twit:latest\
 
 
 

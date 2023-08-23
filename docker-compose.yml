@@ -10,6 +10,7 @@ services:
             context: .
             dockerfile: Dockerfile
         container_name: twit
+        image: raheeb/twit:latest
         volumes:
             - .:/var/www/html
         depends_on:
