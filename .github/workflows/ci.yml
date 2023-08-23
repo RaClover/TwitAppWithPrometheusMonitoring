@@ -13,27 +13,8 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          photo: './tests/true.png'
+          photo: './tests/notify.png'
 
-
-      - name: send custom message with args
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          args: |
-            New push on branch: ${{ github.ref }}
-            Commit Message: ${{ github.event.head_commit.message }}
-
-
-
-      - name: send debug message
-        uses: ./
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID }}
-          token: ${{ secrets.TELEGRAM_TOKEN }}
-          debug: true
-          message: Debugging message.
 
       - name: Build and Push Docker Image
         run: |
@@ -68,7 +49,10 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: 'Pipeline completed successfully!'
+          message: |
+            ✅ **Pipeline Completed Successfully!**
+            New push on branch: `${{ github.ref }}`
+            Commit Message: `${{ github.event.head_commit.message }}`
 
       - name: Send Notification on Failure
         if: failure()
@@ -76,4 +60,7 @@ jobs:
         with:
           to: ${{ secrets.TELEGRAM_CHAT_ID }}
           token: ${{ secrets.TELEGRAM_TOKEN }}
-          message: 'Pipeline failed!'
+          message: |
+            ❌ **Pipeline Failed!**
+            New push on branch: `${{ github.ref }}`
+            Commit Message: `${{ github.event.head_commit.message }}`
