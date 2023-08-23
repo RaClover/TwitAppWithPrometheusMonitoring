@@ -39,7 +39,8 @@ jobs:
         run: |
           echo "DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }}" >> $GITHUB_ENV
           docker-compose build
-          docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p $DOCKERHUB_PASSWORD
+          DOCKERHUB_PASSWORD=${{ secrets.DOCKERHUB_PASSWORD }}
+          echo "$DOCKERHUB_PASSWORD" | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
           docker-compose push
         env:
           DOCKER_BUILDKIT: 1
